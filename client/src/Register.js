@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-//axios to communicate with express api
 //import axios from 'axios'
+import './CSS/form.css'
 
 class FormField extends Component {
     constructor(props) {
@@ -38,6 +38,7 @@ class FormField extends Component {
         <div className={inputClass} style={style}>
           <div className="input-container">
             <input 
+              value={value}
               className="input-field"
               type={type}
               id={id}
@@ -68,6 +69,14 @@ class FormField extends Component {
       }
     }
 
+    handleInputChange = event => {
+      const name = event.target.name
+      const value = event.target.value
+      this.setState({
+        [name]: value
+      })
+    }
+
     formVerification() {
       alert(this.state.firstName)
       return (
@@ -90,12 +99,13 @@ class FormField extends Component {
           <div className="title">
            Sign Up
           </div>
-          <FormField type="text" placeholder="First Name" id="firstName" style={style} />
-          <FormField type="text" placeholder="Last Name" id="lastName" style={style} />
-          <FormField type="email" placeholder="eMail" id="email" style={style} />
-          <FormField type="phone" placeholder="Phone Number" id="phone" style={style} />
-          <FormField type="password" placeholder="Password" id="password" style={style} />
-          <FormField type="password" placeholder="Confirm Password" id="confirmPassword" style={style} />
+
+          <FormField value={this.state.firstName} handleInputChange={this.handleInputChange} type="text" placeholder="First Name" id="firstName" style={style} />
+          <FormField value={this.state.lastName} type="text" placeholder="Last Name" id="lastName" style={style} />
+          <FormField value={this.state.eMail} type="email" placeholder="eMail" id="email" style={style} />
+          <FormField value={this.state.number} type="phone" placeholder="Phone Number" id="phone" style={style} />
+          <FormField value={this.state.password} type="password" placeholder="Password" id="password" style={style} />
+          <FormField value={this.state.confirmPassword} type="password" placeholder="Confirm Password" id="confirmPassword" style={style} />
 
           <button id="loginButton" onClick={() => {this.formVerification()}}>Next</button>
 
