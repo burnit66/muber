@@ -36,9 +36,9 @@ class FormField extends Component {
       
       return (
         <div className={inputClass} style={style}>
-          <div className="form-container">
+          <div className="input-container">
             <input 
-              className="form-field"
+              className="input-field"
               type={type}
               id={id}
               placeholder={placeholder}
@@ -53,30 +53,38 @@ class FormField extends Component {
       )
     }
   }
-  
 
-  class Button extends Component {
-
-    handleSubmit(event) {
-      alert("I was clicked");
-    }
-
-    render() {
-      return (
-        <div className={`button ${this.props.buttonClass}`} onClick={this.handleSubmit} >
-          {this.props.buttonText}
-        </div>
-      )
-    }
-  }
-  
 
   class LoginContainer extends Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        firstName: '',
+        lastName: '',
+        eMail: '',
+        number: '',
+        password: '',
+        confirmPassword: ''
+      }
+    }
+
+    formVerification() {
+      alert(this.state.firstName)
+      return (
+        this.state.firstName.length > 0 &&
+        this.state.lastName.length > 0 &&
+        this.state.email.length > 0 &&
+        this.state.number.length > 0 &&
+        this.state.password.length > 0 &&
+        this.state.confirmPassword.length > 0 &&
+        this.state.password === this.state.confirmPassword
+      )
+    }
+
     render() {
       const style = {
         margin: "15px 0"
       }
-    
       return (
         <div className="login-container">
           <div className="title">
@@ -87,8 +95,9 @@ class FormField extends Component {
           <FormField type="email" placeholder="eMail" id="email" style={style} />
           <FormField type="phone" placeholder="Phone Number" id="phone" style={style} />
           <FormField type="password" placeholder="Password" id="password" style={style} />
-          <FormField type="password" placeholder="Verify Password" id="verifyPassword" style={style} />
-          <Button buttonText="Next" buttonClass="login-button" />
+          <FormField type="password" placeholder="Confirm Password" id="confirmPassword" style={style} />
+
+          <button id="loginButton" onClick={() => {this.formVerification()}}>Next</button>
 
           <br/>
 
