@@ -1,0 +1,41 @@
+import React from 'react';
+import FacebookLogin from 'react-facebook-login';
+import './CSS/splash.css'
+
+class Splash extends React.Component {
+  responseFacebook(response) {
+    console.log(response)
+  }
+
+  render() {
+    return (
+    <div className="splash-container">
+
+        <img className="logo" src={require('./assets/images/Isomaplogo@3x.png')} alt="logo" />
+
+        <div className="title">
+            Welcome to M<span className="colorU">ü</span>ber
+        </div>
+
+        <div className="slogan">
+            <p>Your on demand friend with a truck</p>
+        </div>
+
+        <FacebookLogin
+            appId="550339805465689"
+            autoLoad={false}
+            fields="name,email,picture"
+            callback={this.responseFacebook}
+            cssClass="fb-button"
+            icon="fa-facebook"
+        />
+
+        <div className="existingContainer">
+            <a href="/login" className="existingAccount">Login</a>
+        </div>
+    </div>
+    )
+  }
+}
+
+export default Splash;
