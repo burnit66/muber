@@ -76,7 +76,6 @@ class FormField extends Component {
         [name]: value
       })
     }
-
     formVerification() {
       alert(this.state.firstName)
       return (
@@ -89,7 +88,6 @@ class FormField extends Component {
         this.state.password === this.state.confirmPassword
       )
     }
-
     render() {
       const style = {
         margin: "15px 0"
