@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react'
 import FacebookLogin from 'react-facebook-login';
 import './CSS/splash.css'
 
-class Splash extends React.Component {
+class Email extends Component {
+    render() {
+        return (
+            <div className="emailContainer">
+                <button className="emailButton" onClick={() => window.location.href = '/signup'}>Email</button>
+            </div>
+        )
+    }
+}
+
+class Splash extends Component {
   responseFacebook(response) {
     console.log(response)
   }
@@ -20,6 +30,8 @@ class Splash extends React.Component {
         <div className="slogan">
             <p>Your on demand friend with a truck</p>
         </div>
+
+        <Email />
 
         <FacebookLogin
             appId="550339805465689"
