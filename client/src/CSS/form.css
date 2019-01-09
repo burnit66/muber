@@ -1,0 +1,57 @@
+html, #root{
+    color: #fff;
+    background-color: #2b2f43;
+    font-size: 16px;
+}
+
+.title{
+    padding-top: 15px;
+    font-size: 18px;
+}
+
+.input-field{
+    display: block;
+    margin: 15px auto;
+    border-radius: 9px;
+    height: 2em;
+    width: 20em;
+    border: none;
+    background-color: #465062;
+    padding: 10px;
+    color: #959dac;
+    font-size: 15px;
+}
+
+#loginButton{
+    background-color: #e9168c;
+    color: #fff;
+    border-radius: 9px;
+    width: 21em;
+    padding: 15px;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+#loginButton:hover{
+    background-color: #d1137e;
+}
+
+.existingContainer{
+    padding-top: 20px;
+}
+
+.existingAccount{
+    color: #fff;
+    font-size: 12px;
+}
+
+.termsContainer{
+    padding-top:30px;
+    font-size: 12px;
+}
+
+.termsContainer p a {
+    color: #fff;
+}
+
