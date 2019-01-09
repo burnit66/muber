@@ -33,7 +33,7 @@ import './CSS/form.css'
         this.state.confirmPassword.length > 0 &&
         this.state.password === this.state.confirmPassword
         ) {
-          
+
           alert(`Hello ${this.state.firstName} ${this.state.lastName}, your email is ${this.state.eMail}, phone number is ${this.state.number} and password is ${this.state.password}`);
           
           this.setState({
@@ -55,12 +55,12 @@ import './CSS/form.css'
           </div>
 
           <div className="input-container">
-            <input value={this.state.firstName} onChange={this.handleInputChange} type="text" placeholder="First Name" name="firstName" />
-            <input value={this.state.lastName} onChange={this.handleInputChange} type="text" placeholder="Last Name" name="lastName" />
-            <input value={this.state.eMail} onChange={this.handleInputChange} type="email" placeholder="eMail" name="eMail" />
-            <input value={this.state.number} onChange={this.handleInputChange} type="phone" placeholder="Phone Number" name="number" />
-            <input value={this.state.password} onChange={this.handleInputChange} type="password" placeholder="Password" name="password" />
-            <input value={this.state.confirmPassword} onChange={this.handleInputChange} type="password" placeholder="Confirm Password" name="confirmPassword" />
+            <input className="input-field" value={this.state.firstName} onChange={this.handleInputChange} type="text" placeholder="First Name" name="firstName" />
+            <input className="input-field" value={this.state.lastName} onChange={this.handleInputChange} type="text" placeholder="Last Name" name="lastName" />
+            <input className="input-field" value={this.state.eMail} onChange={this.handleInputChange} type="email" placeholder="eMail" name="eMail" />
+            <input className="input-field" value={this.state.number} onChange={this.handleInputChange} type="phone" placeholder="Phone Number" name="number" />
+            <input className="input-field" value={this.state.password} onChange={this.handleInputChange} type="password" placeholder="Password" name="password" />
+            <input className="input-field" value={this.state.confirmPassword} onChange={this.handleInputChange} type="password" placeholder="Confirm Password" name="confirmPassword" />
           </div>
 
           <button id="loginButton" onClick={this.handleFormSubmit}>Next</button>
