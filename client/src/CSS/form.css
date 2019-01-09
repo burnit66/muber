@@ -1,7 +1,8 @@
-html, #root{
+.login-container{
     color: #fff;
     background-color: #2b2f43;
     font-size: 16px;
+    height: 100vh;
 }
 
 .title{
@@ -31,6 +32,8 @@ html, #root{
     border: none;
     font-size: 15px;
     cursor: pointer;
+    display: block;
+    margin: 0 auto;
 }
 
 #loginButton:hover{
@@ -49,6 +52,7 @@ html, #root{
 .termsContainer{
     padding-top:30px;
     font-size: 12px;
+    text-align: center;
 }
 
 .termsContainer p a {

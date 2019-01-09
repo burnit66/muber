@@ -44,6 +44,8 @@ import './CSS/form.css'
             password: '',
             confirmPassword: ''
           })
+        } else {
+          alert('Invalid form submission')
         }
     }
 
