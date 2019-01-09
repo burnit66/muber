@@ -5,6 +5,7 @@ import NoMatch from "./404";
 import SignupContainer from './Register'
 import Splash from './Splash'
 import Login from './Login'
+import Home from './Home'
 
 const App = () => (
   <Router>
@@ -13,6 +14,7 @@ const App = () => (
         <Route exact path="/" component={Splash} />
         <Route exact path="/signup" component={SignupContainer} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/home" component={Home} />
         {/* <Route exact path="/books/:id" component={Detail} /> */}
         <Route component={NoMatch} />
       </Switch>

@@ -21,6 +21,9 @@ class Splash extends Component {
     return (
     <div className="splash-container">
 
+<div id="status">
+</div>
+
         <img className="logo" src={require('./assets/images/Isomaplogo@3x.png')} alt="logo" />
 
         <div className="title">
