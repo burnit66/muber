@@ -1,25 +1,18 @@
 import React, { Component } from 'react'
 //import axios from 'axios'
 import './CSS/sidebar.css'
+const FBAPI = window.logOutFB;
 
 class Sidebar extends Component {
-
-    // toggleNav() {
-    //     document.getElementsByClassName("main-menu")[0].classList.toggle("openNav");
-    //     document.getElementsByClassName("homeContainer")[0].classList.toggle("shiftRight");
-    //   }
 
     render() {
       return (
         <div className="sidebarContainer">
-            {/* <div className="navHamburger">
-                <i onClick={this.toggleNav} className="fas fa-bars"></i>
-            </div> */}
             <nav className="main-menu">
                 <ul>
                     <li>
                         <a href="/home">
-                            <i className="fa fa-home fa-2x"></i>
+                            <i className="fas fa-home fa-2x"></i>
                                 <span className="nav-text">Home</span>
                         </a>
 
@@ -33,7 +26,7 @@ class Sidebar extends Component {
                     </li>
                     <li>
                         <a href="/billing">
-                            <i className="fa fa-credit-card fa-2x"></i>
+                            <i className="fas fa-credit-card fa-2x"></i>
                                 <span className="nav-text">Billing Info</span>
                         </a>
 
@@ -54,8 +47,8 @@ class Sidebar extends Component {
 
                 <ul className="logout">
                     <li>
-                        <a href="/logout">
-                            <i className="fa fa-power-off fa-2x"></i>
+                        <a>
+                            <i className="fas fa-power-off fa-2x" onClick={ FBAPI }></i>
                                 <span className="nav-text">Logout</span>
                         </a>
                     </li>
