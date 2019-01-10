@@ -1,0 +1,42 @@
+.mfaContainer {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    color: #fff;
+    background-color: #2b2f43;
+    font-size: 16px;
+    height: 100vh;
+}
+
+.mfaBlurb {
+    padding: 30px 0px 15px 0px;
+}
+
+.mfaCodeInput {
+    margin: 15px auto;
+    border-radius: 9px;
+    height: 2em;
+    width: 20em;
+    border: none;
+    background-color: #465062;
+    padding: 10px;
+    color: #959dac;
+    font-size: 15px;
+}
+
+.mfaNext {
+    background-color: #e9168c;
+    color: #fff;
+    border-radius: 9px;
+    width: 21em;
+    padding: 15px;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+}
+
+.mfaNext:hover {
+    background-color: #d1137e;
+}

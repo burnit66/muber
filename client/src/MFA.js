@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 //import axios from 'axios'
-import './CSS/whereto.css'
+import './CSS/mfa.css'
 
   class MFA extends Component {
     constructor(props) {
@@ -8,22 +8,35 @@ import './CSS/whereto.css'
       this.state = {
         code: ''
       }
+      this.onChange = this.onChange.bind(this)
     }
 
-    handleInputChange = event => {
+    onlyNum(event){
+        const re = /^[0-9\b]+$/;
+        if (event.target.value === '' || re.test(event.target.value)) {
+           this.setState({value: event.target.value})
+        }
+     }
+
+    handleInputChange(event) {
         const { name, value } = event.target
           this.setState({
           [name]: value
         })
       }
+
+      onChange(e) {
+        this.onlyNum(e)
+        this.handleInputChange(e)
+      }
     
       handleFormSubmit = event => {
         event.preventDefault()
         if (
-          this.state.location.length > 0
+          this.state.code.length > 0
           ) {
   
-            alert(`You are headed to ${this.state.location}`);
+            alert(`Your code is ${this.state.code}`);
             
             this.setState({
               location: ''
@@ -33,24 +46,19 @@ import './CSS/whereto.css'
           }
       }
 
-      handleKeyPress = (e) => {
-        if (e.key === 'Enter') {
-            this.handleFormSubmit(e)
-        }
-      }
-
-      toggleNav() {
-        document.getElementsByClassName("main-menu")[0].classList.toggle("openNav");
-        document.getElementsByClassName("homeContainer")[0].classList.toggle("shiftRight");
+      numberGiven(){
+          return '440-289-8769'
       }
 
     render() {
       return (
-        <div className="whereTo">
-          <div className="navHamburger">
-              <i onClick={this.toggleNav} className="fas fa-bars"></i>
-          </div>
-          <input className="whereTo-field" value={this.state.location} onChange={this.handleInputChange} onKeyPress={this.handleKeyPress} type="text" placeholder="Where to?" name="location" />
+        <div className="mfaContainer">
+            <div className="title">
+                Enter Code
+            </div>
+            <p className="mfaBlurb">We sent a code to {this.numberGiven()}. Please enter it here:</p>
+            <input className="mfaCodeInput" value={this.state.code} onChange={this.onChange} type="text" placeholder="Code sent to mobile" name="code" />
+            <button className="mfaNext" onClick={this.handleFormSubmit}>Next</button>
         </div>
       )
     }
