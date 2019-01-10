@@ -12,10 +12,26 @@
     font-size: 20px;
 }
 
+.navHamburger {
+    position: absolute;
+    left: 0px;
+    top: 5px;
+    cursor: pointer;
+    color: #333;
+}
+
+.shiftRight {
+    margin-left: 60px;
+}
+
+.openNav {
+    width: 60px!important;
+}
+
 @media only screen  and (min-width : 1224px) {
     .main-menu:hover,
     nav.main-menu.expanded {
-        width: 250px;
+        width: 250px!important;
         overflow: visible;
     }
 }
@@ -27,7 +43,7 @@
     bottom: 0;
     height: 100%;
     left: 0;
-    width: 60px;
+    width: 0px;
     overflow: hidden;
     -webkit-transition: width .05s linear;
     transition: width .05s linear;

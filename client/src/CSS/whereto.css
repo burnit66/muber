@@ -1,10 +1,11 @@
 .whereTo {
-    width: 100%;
+    width: 90%;
     display: block;
     margin: 0 auto;
+    position: relative;
 }
 .whereTo-field {
-    width: 90%;
+    width: 100%;
     display: block;
     margin: 0 auto;
     height: 3em;
@@ -12,5 +13,5 @@
     border-radius: 0px 0px 9px 9px;
     border: 1px solid #ccc;
     border-top: none;
-    padding-left: 1em;
+    padding-left: 3.5em;
 }

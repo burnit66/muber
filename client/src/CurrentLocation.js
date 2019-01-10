@@ -6,12 +6,12 @@ import './CSS/currentlocation.css'
 
     handleEvent = event => {
         alert("I was clicked");
-    };
+    }
 
     render() {
       return (
         <div className="currentLocationContainer" onClick={this.handleEvent}>
-            <i class="fas fa-location-arrow fa-2x fa-vc"></i>
+            <i className="fas fa-location-arrow fa-2x fa-vc"></i>
         </div>
       )
     }
