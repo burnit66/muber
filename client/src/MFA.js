@@ -3,32 +3,18 @@ import React, { Component } from 'react'
 import './CSS/mfa.css'
 
   class MFA extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        code: ''
-      }
-      this.onChange = this.onChange.bind(this)
-    }
-
-    onlyNum(event){
-        const re = /^[0-9\b]+$/;
-        if (event.target.value === '' || re.test(event.target.value)) {
-           this.setState({value: event.target.value})
-        }
+    constructor(){
+        super();
+        this.state = {code: ''};
+        this.onChange = this.onChange.bind(this)
      }
 
-    handleInputChange(event) {
-        const { name, value } = event.target
-          this.setState({
-          [name]: value
-        })
-      }
-
-      onChange(e) {
-        this.onlyNum(e)
-        this.handleInputChange(e)
-      }
+     onChange(e){
+        const re = /^[0-9\b]+$/;
+        if (e.target.value === '' || re.test(e.target.value)) {
+           this.setState({code: e.target.value})
+        }
+     }
     
       handleFormSubmit = event => {
         event.preventDefault()
@@ -57,7 +43,7 @@ import './CSS/mfa.css'
                 Enter Code
             </div>
             <p className="mfaBlurb">We sent a code to {this.numberGiven()}. Please enter it here:</p>
-            <input className="mfaCodeInput" value={this.state.code} onChange={this.onChange} type="text" placeholder="Code sent to mobile" name="code" />
+            <input className="mfaCodeInput" value={this.state.value} onChange={this.onChange} type="text" maxlength="4" placeholder="Code sent to mobile" name="code" />
             <button className="mfaNext" onClick={this.handleFormSubmit}>Next</button>
         </div>
       )
