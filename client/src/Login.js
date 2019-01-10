@@ -20,7 +20,7 @@ import './CSS/form.css'
   
     handleFormSubmit = event => {
       event.preventDefault()
-      if(
+      if (
         this.state.eMail.length > 0 &&
         this.state.password.length > 0
         ) {
