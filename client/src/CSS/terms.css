@@ -1,0 +1,47 @@
+.termsContainer {
+    max-width: 700px;
+    display: block;
+    margin: 0 auto;
+    text-align: left;
+    font-size: 1em;
+    padding: 0px 10px;
+}
+
+.title {
+    padding-bottom: 20px;
+}
+
+.termHeader {
+    color: #454F63;
+    font-size: 1.5em;
+}
+
+.termText {
+    color: #78849E;
+    font-size: 1em;
+}
+
+.termText li {
+    margin-top:10px;
+}
+
+.termBold {
+    font-weight: bold;
+}
+
+.termButton {
+    background-color: #e9168c;
+    color: #ffffff;
+    width: 20em;
+    height: 3em;
+    border: none;
+    border-radius: 9px;
+    font-size: 1em;
+    cursor: pointer;
+    margin:30px auto;
+    display: block;
+}
+
+.termButton:hover {
+    background-color: #d1137e;
+}
