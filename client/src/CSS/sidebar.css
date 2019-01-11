@@ -2,7 +2,17 @@
     font-size: 2em;
 }
 
-.fa, .fas {
+.fa {
+    position: relative;
+    display: table-cell;
+    width: 60px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.fas {
     position: relative;
     display: table-cell;
     width: 60px;
@@ -10,12 +20,29 @@
     text-align: center;
     vertical-align: middle;
     font-size: 20px;
+    cursor: pointer;
+}
+
+.navHamburger {
+    position: absolute;
+    left: 0px;
+    top: 5px;
+    cursor: pointer;
+    color: #333;
+}
+
+.shiftRight {
+    margin-left: 60px;
+}
+
+.openNav {
+    width: 60px!important;
 }
 
 @media only screen  and (min-width : 1224px) {
     .main-menu:hover,
     nav.main-menu.expanded {
-        width: 250px;
+        width: 250px!important;
         overflow: visible;
     }
 }
@@ -27,7 +54,7 @@
     bottom: 0;
     height: 100%;
     left: 0;
-    width: 60px;
+    width: 0px;
     overflow: hidden;
     -webkit-transition: width .05s linear;
     transition: width .05s linear;
