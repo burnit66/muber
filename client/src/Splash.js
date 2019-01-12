@@ -24,6 +24,8 @@ class Splash extends Component {
 <div id="status">
 </div>
 
+<h1>Hello, {this.props.name}</h1>
+
         <img className="logo" src={require('./assets/images/Isomaplogo@3x.png')} alt="logo" />
 
         <div className="title">
@@ -46,7 +48,8 @@ class Splash extends Component {
         />
 
         <div className="existingContainer">
-            <a href="/login" className="existingAccount">Login</a>
+            <a href="/home" className="existingAccount">Login</a>
+            <button onClick={this.props.auth.login}>Real Login</button>
         </div>
     </div>
     )
