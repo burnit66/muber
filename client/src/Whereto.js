@@ -47,9 +47,15 @@ import './CSS/whereto.css'
     render() {
       return (
         <div className="whereTo">
-          <div className="navHamburger">
-              <i onClick={this.toggleNav} className="fas fa-bars"></i>
+
+          <div className="navHamburger" onClick={this.toggleNav}>
+            <div className="toggle-icon">
+              <span className="bar"></span>
+              <span className="bar"></span>
+              <span className="bar"></span>
+            </div>
           </div>
+
           <input className="whereTo-field" value={this.state.location} onChange={this.handleInputChange} onKeyPress={this.handleKeyPress} type="text" placeholder="Where to?" name="location" />
         </div>
       )

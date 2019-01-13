@@ -25,10 +25,40 @@
 
 .navHamburger {
     position: absolute;
-    left: 0px;
-    top: 5px;
+    left: 6px;
+    top: 8px;
     cursor: pointer;
-    color: #333;
+    color: #454f62;
+}
+
+.bar {
+    display: block;
+    width: 1.6em;
+    height: 0.15em;
+    margin: 0.4em;
+    border-right: 2em solid #454f62;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition-property: -webkit-transform, margin, border-right-color, box-shadow;
+    -webkit-transition-property: margin, border-right-color, -webkit-transform, -webkit-box-shadow;
+    transition-property: margin, border-right-color, -webkit-transform, -webkit-box-shadow;
+    -o-transition-property: transform, margin, border-right-color, box-shadow;
+    transition-property: transform, margin, border-right-color, box-shadow;
+    transition-property: transform, margin, border-right-color, box-shadow, -webkit-transform, -webkit-box-shadow;
+    -webkit-transition-duration: 600ms;
+    -o-transition-duration: 600ms;
+    transition-duration: 600ms;
+    border-radius: 9px;
+}
+
+.bar:nth-of-type(1) {
+    width: .6em;
+    border-right: 1.3em solid #454f62;
+}
+
+.bar:nth-of-type(3) {
+    border-right: 1.3em solid #454f62;
+    width: 2em;
 }
 
 .shiftRight {
@@ -36,13 +66,14 @@
 }
 
 .openNav {
-    width: 60px!important;
+    width: 60px !important;
 }
 
-@media only screen  and (min-width : 1224px) {
+@media only screen and (min-width : 1224px) {
+
     .main-menu:hover,
     nav.main-menu.expanded {
-        width: 250px!important;
+        width: 250px !important;
         overflow: visible;
     }
 }
