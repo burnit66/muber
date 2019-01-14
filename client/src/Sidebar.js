@@ -9,7 +9,13 @@ class Sidebar extends Component {
       return (
         <div className="sidebarContainer">
             <nav className="main-menu">
+
+                <a className="profileImage" href="/profile">
+                    <img alt="Your Profile" src="http://placehold.it/50x50"/>
+                </a>
+
                 <ul>
+                    
                     <li>
                         <a href="/home">
                             <i className="fas fa-home fa-2x"></i>

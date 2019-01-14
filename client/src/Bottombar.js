@@ -11,19 +11,10 @@ import './CSS/bottombar.css'
     }
 
     toggleBottom () {
-      document.getElementById("expand").classList[0].toggle("openBottom")      
-      document.getElementById("thing").classList[0].toggle("rotate")
-      document.getElementById("containers").classList[0].toggle("display")
-      // console.log(document.getElementById("expand").classList[0])
+      document.getElementById("expand").classList.toggle("openBottom")
+      document.getElementById("thing").classList.toggle("rotate")
+      document.getElementById("containers").classList.toggle("display")
     }
-    
-
-    // handleInputChange = event => {
-    //     const { name, value } = event.target
-    //       this.setState({
-    //       [name]: value
-    //     })
-    //   }
 
     render() {
       return (
@@ -31,7 +22,7 @@ import './CSS/bottombar.css'
           <div className="outerContianer">
 
             <div className="opening" onClick={() => {this.toggleBottom()}}>
-              <i id="thing" className="fa fa-angle-up fa-3x"></i>
+              <i id="thing" className="fas fa-angle-up fa-3x"></i>
               <div className="middle">
                 <h3>Book a Muber</h3>
                 <span>Friends with trucks</span>
@@ -41,22 +32,43 @@ import './CSS/bottombar.css'
             <div id="containers" className="bottomOuterContainer">
               <div className="bottomInnercontainer">
                 <div>
-                  <button className="bottomButton">Thing</button>
+                  <button className="bottomButton">
+                    <i class="fas fa-truck-pickup"></i>
+                    Truck Only
+                  </button>
                 </div>
                 <div>
-                  <button className="bottomButton">Thing</button>
+                  <button className="bottomButton">
+                    <i class="fas fa-truck-pickup"></i>
+                    Truck with Help
+                  </button>
                 </div>
                 <div>
-                  <button className="bottomButton">Thing</button>
+                  <button className="bottomButton">
+                    <i class="fas fa-truck-pickup"></i>
+                    Future Move
+                  </button>
                 </div>
                 <div>
-                  <button className="bottomButton">Thing</button>
+                  <button className="bottomButton">
+                    <span className="bold">Small</span>
+                    <br/>
+                    <span>&lt; 250lbs.</span>
+                  </button>
                 </div>
                 <div>
-                  <button className="bottomButton">Thing</button>
+                  <button className="bottomButton">
+                    <span className="bold">Medium</span>
+                    <br/>
+                    <span>&gt; 250lbs.</span>
+                  </button>
                 </div>
                 <div>
-                  <button className="bottomButton">Thing</button>
+                  <button className="bottomButton">
+                    <span className="bold">Large</span>
+                    <br/>
+                    <span>&lt; 250lbs.</span>
+                  </button>
                 </div>
               </div>
             </div>
