@@ -88,3 +88,9 @@
 .openSearch {
   top: 0;
 }
+
+.searchContainer {
+  position: absolute;
+  left: 40px;
+  top: 20px;
+}

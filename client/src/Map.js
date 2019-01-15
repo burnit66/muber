@@ -7,7 +7,7 @@ import './CSS/map.css'
     render() {
       return (
         <div className="mapContainer">
-          <img className="map" alt="map" src="https://www.uwgb.edu/UWGBCMS/media/Maps/images/map-icon.jpg"/>
+          <iframe width="100%" height="1000px" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=-81.61008238792421%2C41.50106071849423%2C-81.60557627677919%2C41.50397746363138&amp;layer=mapnik&amp;marker=41.502519107485014%2C-81.60782933235168"></iframe>
         </div>
       )
     }
