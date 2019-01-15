@@ -10,18 +10,19 @@ class Sidebar extends Component {
         <div className="sidebarContainer">
             <nav className="main-menu">
 
-                <a className="profileImage" href="/profile">
-                    <img alt="Your Profile" src="http://placehold.it/50x50"/>
-                </a>
+                <div class="profile-pic-container">
+                    <a href="/profile">
+                        <img class="profile-pic" src="https://s3.amazonaws.com/uifaces/faces/twitter/nuraika/128.jpg" alt="" />
+                        <div class="rating-container"><span className="rating"><i class="fas fa-star"></i>4.5</span></div>
+                    </a>
+                </div>
 
                 <ul>
-                    
                     <li>
                         <a href="/home">
                             <i className="fas fa-home fa-2x"></i>
                                 <span className="nav-text">Home</span>
                         </a>
-
                     </li>
                     <li>
                         <a href="/history">

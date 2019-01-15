@@ -67,7 +67,7 @@ import './CSS/bottombar.css'
                   <button className="bottomButton">
                     <span className="bold">Large</span>
                     <br/>
-                    <span>&lt; 250lbs.</span>
+                    <span>&gt; 500lbs.</span>
                   </button>
                 </div>
               </div>

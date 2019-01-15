@@ -65,8 +65,21 @@
 
     .main-menu:hover,
     nav.main-menu.expanded {
-        width: 250px !important;
+        width: 200px !important;
         overflow: visible;
+    }
+
+    .main-menu:hover>.profile-pic-container div {
+        display: block;
+    }
+
+    .main-menu:hover>.profile-pic-container {
+        left: calc(50% - 50px);
+    }
+
+    .main-menu:hover>.profile-pic-container img {
+        max-width: 100px;
+        box-shadow: 0 0 15px #202020;
     }
 }
 
@@ -111,7 +124,7 @@
 
 }
 
-.profileImage img {
+.navImageContainer img {
     display: block;
     margin: 0 auto;
     padding-top: 10px;
@@ -131,7 +144,7 @@
     position: relative;
     display: table-cell;
     vertical-align: middle;
-    width: 190px;
+    width: 140px;
 }
 
 .main-menu>ul.logout {
@@ -170,15 +183,48 @@ nav li {
 }
 
 .main-menu li:hover>a,
-nav.main-menu li.active>a,
-.dropdown-menu>li>a:hover,
-.dropdown-menu>li>a:focus,
-.dropdown-menu>.active>a,
-.dropdown-menu>.active>a:hover,
-.dropdown-menu>.active>a:focus,
-.no-touch .dashboard-page nav.dashboard-menu ul li:hover a,
-.dashboard-page nav.dashboard-menu ul li.active a {
+nav.main-menu li.active>a {
     color: #fff;
     background-color: #454F63;
 }
 
+.profile-pic-container {
+    top: 20px;
+    left: calc(50% - 26px);
+    position: relative;
+    padding-bottom: 35px;
+}
+
+.profile-pic {
+    max-width: 50px;
+    border-radius: 20px;
+}
+
+.rating-container {
+    background-color: #333;
+    border-radius: 0px 0px 30px 0px;
+    width: 50px;
+    height: 40px;
+    position: absolute;
+    top: 75px;
+    left: 52px;
+    display: none;
+}
+
+.fa-star {
+    font-size: 10px;
+    display: inline;
+    padding-right: 2px;
+}
+
+.rating {
+    color: #fff;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 8px;
+}
+
+.logout {
+    cursor: pointer;
+}
