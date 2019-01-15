@@ -73,7 +73,7 @@ import './CSS/form.css'
             <a href="/login" className="existingAccount">Already have an account?</a>
           </div>
 
-          <div className="termsContainer">
+          <div className="termsSignupContainer">
             <p>By pressing "Next", you agree to Mübers <a href="/terms">Terms of use</a> and <a href="/privacy">Privacy Policy</a></p>
           </div>
         </div>

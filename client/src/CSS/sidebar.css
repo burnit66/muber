@@ -202,7 +202,7 @@ nav.main-menu li.active>a {
 
 .rating-container {
     background-color: #333;
-    border-radius: 0px 0px 30px 0px;
+    border-radius: 0px 0px 30px 4px;
     width: 50px;
     height: 40px;
     position: absolute;

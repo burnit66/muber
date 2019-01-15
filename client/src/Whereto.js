@@ -4,7 +4,7 @@ import './CSS/whereto.css'
 
   class WhereTo extends Component {
     constructor(props) {
-      super(props);
+      super(props)
       this.state = {
         location: ''
       }
@@ -42,8 +42,15 @@ import './CSS/whereto.css'
       }
 
       toggleNav() {
-        document.getElementsByClassName("main-menu")[0].classList.toggle("openNav");
-        document.getElementsByClassName("homeContainer")[0].classList.toggle("shiftRight");
+        document.getElementsByClassName("main-menu")[0].classList.toggle("openNav")
+        document.getElementsByClassName("homeContainer")[0].classList.toggle("shiftRight")
+      }
+
+      toggleSearch() {
+        document.getElementsByClassName("navContainer")[0].classList.toggle("openSearch")
+        document.getElementById("expand").classList.add("openBottom")
+        document.getElementById("thing").classList.add("rotate")
+        document.getElementById("containers").classList.add("display")
       }
 
     render() {
@@ -58,8 +65,9 @@ import './CSS/whereto.css'
             </div>
           </div>
 
-          {/* <input className="whereTo-field" value={this.state.location} onChange={this.handleInputChange} onKeyPress={this.handleKeyPress} type="text" placeholder="Where to?" name="location" /> */}
-
+          <div className="searchContainer" onClick={this.toggleSearch}>
+            <i className="fas fa-search"></i>
+          </div>
 
           <div className="navContainer">
             <div className="side">
@@ -73,7 +81,7 @@ import './CSS/whereto.css'
             
             <div className="inputContainer">
               <label for="from">From</label>
-              <input id="from" class="whereTo-field" value={this.state.locationFrom} onChange={this.handleInputChange} onKeyPress={this.handleKeyPress} type="text" placeholder="My Location" name="locationFrom" />
+              <input id="from" className="whereTo-field" value={this.state.locationFrom} onChange={this.handleInputChange} onKeyPress={this.handleKeyPress} type="text" placeholder="My Location" name="locationFrom" />
             
               <hr/>
 
@@ -81,8 +89,6 @@ import './CSS/whereto.css'
               <input id="to" className="whereTo-field" value={this.state.locationTo} onChange={this.handleInputChange} onKeyPress={this.handleKeyPress} type="text" placeholder="My Home" name="locationTo" />
             </div>
           </div>
-
-
         </div>
       )
     }

@@ -49,13 +49,13 @@
     font-size: 12px;
 }
 
-.termsContainer{
+.termsSignupContainer {
     padding-top:30px;
     font-size: 12px;
     text-align: center;
 }
 
-.termsContainer p a {
+.termsSignupContainer p a {
     color: #fff;
 }
 
