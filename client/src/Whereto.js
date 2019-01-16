@@ -6,7 +6,8 @@ import './CSS/whereto.css'
     constructor(props) {
       super(props)
       this.state = {
-        location: ''
+        locationFrom: '',
+        locationTo: ''
       }
     }
 
