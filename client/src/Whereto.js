@@ -4,9 +4,10 @@ import './CSS/whereto.css'
 
   class WhereTo extends Component {
     constructor(props) {
-      super(props);
+      super(props)
       this.state = {
-        location: ''
+        locationFrom: '',
+        locationTo: ''
       }
     }
 
@@ -20,13 +21,15 @@ import './CSS/whereto.css'
       handleFormSubmit = event => {
         event.preventDefault()
         if (
-          this.state.location.length > 0
+          this.state.locationTo.length > 0 &&
+          this.state.locationFrom.length > 0
           ) {
   
-            alert(`You are headed to ${this.state.location}`);
+            alert(`You are headed from ${this.state.locationFrom} to ${this.state.locationTo}`);
             
             this.setState({
-              location: ''
+              locationFrom: '',
+              locationTo: ''
             })
           } else {
             alert('Invalid form submission')
@@ -40,17 +43,53 @@ import './CSS/whereto.css'
       }
 
       toggleNav() {
-        document.getElementsByClassName("main-menu")[0].classList.toggle("openNav");
-        document.getElementsByClassName("homeContainer")[0].classList.toggle("shiftRight");
+        document.getElementsByClassName("main-menu")[0].classList.toggle("openNav")
+        document.getElementsByClassName("homeContainer")[0].classList.toggle("shiftRight")
+      }
+
+      toggleSearch() {
+        document.getElementsByClassName("navContainer")[0].classList.toggle("openSearch")
+        document.getElementById("expand").classList.add("openBottom")
+        document.getElementById("thing").classList.add("rotate")
+        document.getElementById("containers").classList.add("display")
       }
 
     render() {
       return (
         <div className="whereTo">
-          <div className="navHamburger">
-              <i onClick={this.toggleNav} className="fas fa-bars"></i>
+
+          <div className="navHamburger" onClick={this.toggleNav}>
+            <div className="toggle-icon">
+              <span className="bar"></span>
+              <span className="bar"></span>
+              <span className="bar"></span>
+            </div>
           </div>
-          <input className="whereTo-field" value={this.state.location} onChange={this.handleInputChange} onKeyPress={this.handleKeyPress} type="text" placeholder="Where to?" name="location" />
+
+          <div className="searchContainer" onClick={this.toggleSearch}>
+            <i className="fas fa-search"></i>
+          </div>
+
+          <div className="navContainer">
+            <div className="side">
+              <span className="internalImage1">&#9679;</span>
+              <span className="internalImage2">&#9679;</span>
+              <span className="internalImage2">&#9679;</span>
+              <span className="internalImage2">&#9679;</span>
+              <span className="internalImage2">&#9679;</span>
+              <span className="internalImage1">&#9679;</span>
+            </div>
+            
+            <div className="inputContainer">
+              <label for="from">From</label>
+              <input id="from" className="whereTo-field" value={this.state.locationFrom} onChange={this.handleInputChange} onKeyPress={this.handleKeyPress} type="text" placeholder="My Location" name="locationFrom" />
+            
+              <hr/>
+
+              <label for="to">To</label>
+              <input id="to" className="whereTo-field" value={this.state.locationTo} onChange={this.handleInputChange} onKeyPress={this.handleKeyPress} type="text" placeholder="My Home" name="locationTo" />
+            </div>
+          </div>
         </div>
       )
     }

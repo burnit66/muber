@@ -23,12 +23,34 @@
     cursor: pointer;
 }
 
-.navHamburger {
-    position: absolute;
-    left: 0px;
-    top: 5px;
-    cursor: pointer;
-    color: #333;
+.bar {
+    display: block;
+    width: 1.6em;
+    height: 0.15em;
+    margin: 0.4em;
+    border-right: 2em solid #454f62;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition-property: -webkit-transform, margin, border-right-color, box-shadow;
+    -webkit-transition-property: margin, border-right-color, -webkit-transform, -webkit-box-shadow;
+    transition-property: margin, border-right-color, -webkit-transform, -webkit-box-shadow;
+    -o-transition-property: transform, margin, border-right-color, box-shadow;
+    transition-property: transform, margin, border-right-color, box-shadow;
+    transition-property: transform, margin, border-right-color, box-shadow, -webkit-transform, -webkit-box-shadow;
+    -webkit-transition-duration: 600ms;
+    -o-transition-duration: 600ms;
+    transition-duration: 600ms;
+    border-radius: 9px;
+}
+
+.bar:nth-of-type(1) {
+    width: .6em;
+    border-right: 1.3em solid #454f62;
+}
+
+.bar:nth-of-type(3) {
+    border-right: 1.3em solid #454f62;
+    width: 2em;
 }
 
 .shiftRight {
@@ -36,19 +58,33 @@
 }
 
 .openNav {
-    width: 60px!important;
+    width: 60px !important;
 }
 
-@media only screen  and (min-width : 1224px) {
+@media only screen and (min-width : 1224px) {
+
     .main-menu:hover,
     nav.main-menu.expanded {
-        width: 250px!important;
+        width: 200px !important;
         overflow: visible;
+    }
+
+    .main-menu:hover>.profile-pic-container div {
+        display: block;
+    }
+
+    .main-menu:hover>.profile-pic-container {
+        left: calc(50% - 50px);
+    }
+
+    .main-menu:hover>.profile-pic-container img {
+        max-width: 100px;
+        box-shadow: 0 0 15px #202020;
     }
 }
 
 .main-menu {
-    background: #212121;
+    background: #e9168c;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -60,6 +96,10 @@
     transition: width .05s linear;
     -webkit-transform: translateZ(0) scale(1, 1);
     z-index: 1000;
+    -webkit-transition: width .4s ease-in;
+    -moz-transition: width .4s ease-in;
+    -o-transition: width .4s ease-in;
+    transition: width .4s ease-in;
 }
 
 .main-menu>ul {
@@ -70,6 +110,7 @@
     position: relative;
     display: block;
     width: 250px;
+    padding: 5px 0px;
 }
 
 .main-menu li>a {
@@ -77,7 +118,7 @@
     display: table;
     border-collapse: collapse;
     border-spacing: 0;
-    color: #999;
+    color: #fff;
     font-family: arial;
     font-size: 14px;
     text-decoration: none;
@@ -85,6 +126,12 @@
     -webkit-transition: all .1s linear;
     transition: all .1s linear;
 
+}
+
+.navImageContainer img {
+    display: block;
+    margin: 0 auto;
+    padding-top: 10px;
 }
 
 .main-menu .nav-icon {
@@ -101,7 +148,7 @@
     position: relative;
     display: table-cell;
     vertical-align: middle;
-    width: 190px;
+    width: 140px;
 }
 
 .main-menu>ul.logout {
@@ -140,14 +187,48 @@ nav li {
 }
 
 .main-menu li:hover>a,
-nav.main-menu li.active>a,
-.dropdown-menu>li>a:hover,
-.dropdown-menu>li>a:focus,
-.dropdown-menu>.active>a,
-.dropdown-menu>.active>a:hover,
-.dropdown-menu>.active>a:focus,
-.no-touch .dashboard-page nav.dashboard-menu ul li:hover a,
-.dashboard-page nav.dashboard-menu ul li.active a {
+nav.main-menu li.active>a {
     color: #fff;
-    background-color: #e9168c;
+    background-color: #454F63;
+}
+
+.profile-pic-container {
+    top: 20px;
+    left: calc(50% - 26px);
+    position: relative;
+    padding-bottom: 35px;
+}
+
+.profile-pic {
+    max-width: 50px;
+    border-radius: 20px;
+}
+
+.rating-container {
+    background-color: #333;
+    border-radius: 0px 0px 30px 4px;
+    width: 50px;
+    height: 40px;
+    position: absolute;
+    top: 75px;
+    left: 52px;
+    display: none;
+}
+
+.fa-star {
+    font-size: 10px;
+    display: inline;
+    padding-right: 2px;
+}
+
+.rating {
+    color: #fff;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 8px;
+}
+
+.logout {
+    cursor: pointer;
 }

@@ -9,13 +9,20 @@ class Sidebar extends Component {
       return (
         <div className="sidebarContainer">
             <nav className="main-menu">
+
+                <div class="profile-pic-container">
+                    <a href="/profile">
+                        <img class="profile-pic" src="https://s3.amazonaws.com/uifaces/faces/twitter/nuraika/128.jpg" alt="" />
+                        <div class="rating-container"><span className="rating"><i class="fas fa-star"></i>4.5</span></div>
+                    </a>
+                </div>
+
                 <ul>
                     <li>
                         <a href="/home">
                             <i className="fas fa-home fa-2x"></i>
                                 <span className="nav-text">Home</span>
                         </a>
-
                     </li>
                     <li>
                         <a href="/history">
