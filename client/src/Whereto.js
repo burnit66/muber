@@ -47,7 +47,7 @@ import './CSS/whereto.css'
       }
 
       toggleSearch() {
-        document.getElementsByClassName("navContainer")[0].classList.toggle("openSearch")
+        document.getElementsByClassName("mapboxgl-control-container")[0].classList.toggle("openSearch")
         document.getElementById("expand").classList.add("openBottom")
         document.getElementById("thing").classList.add("rotate")
         document.getElementById("containers").classList.add("display")

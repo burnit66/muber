@@ -1,4 +1,4 @@
-import React, { Component}  from 'react';
+import React, { Component}  from 'react'
 import MapGL, { Marker } from 'react-map-gl'
 import Geocoder from 'react-map-gl-geocoder'
 import DeckGL, { GeoJsonLayer } from 'deck.gl'
@@ -87,7 +87,6 @@ class Map extends Component {
   }
 
   setPosition = () => {
-    console.log("hello")
     const success = (position) => {
       this.setState({
         marker: {
@@ -200,8 +199,8 @@ class Map extends Component {
           })
           this.setState({
             viewport: {
-              width: 800,
-              height: 600,
+              width: vwidth,
+              height: vheight,
               latitude: newViewport.latitude,
               longitude: newViewport.longitude,
               zoom: newViewport.zoom,
@@ -232,11 +231,11 @@ class Map extends Component {
   }
   
   confirmclick = () => {
-    const interval = setInterval(this.setPosition, 2000)
+    const interval = setInterval(this.setPosition, 3000)
     this.setState({
       viewport: {
-        width: 800,
-        height: 600,
+        width: vwidth,
+        height: vheight,
         latitude: this.state.markerstart.latitude,
         longitude: this.state.markerstart.longitude,
         zoom: 14,
@@ -321,101 +320,82 @@ class Map extends Component {
   render() {
     return (
       <div className="mapContainer">
-      
-        <div className="navContainer">
-          <div className="side">
-            <span className="internalImage1">&#9679;</span>
-            <span className="internalImage2">&#9679;</span>
-            <span className="internalImage2">&#9679;</span>
-            <span className="internalImage2">&#9679;</span>
-            <span className="internalImage2">&#9679;</span>
-            <span className="internalImage1">&#9679;</span>
-          </div>
-          
-          <div className="inputContainer">
-            <label for="from">From</label>
-            <input id="from" className="whereTo-field" value={this.state.locationFrom} onChange={this.handleInputChange} onKeyPress={this.handleKeyPress} type="text" placeholder="My Location" name="locationFrom" />
-          
-            <hr/>
-
-            <label for="to">To</label>
-            <input id="to" className="whereTo-field" value={this.state.locationTo} onChange={this.handleInputChange} onKeyPress={this.handleKeyPress} type="text" placeholder="My Home" name="locationTo" />
-          </div>
-        </div>
 
         <div>
-              <MapGL
-                ref={this.mapRef} 
+            <MapGL
+              ref={this.mapRef} 
+              {...this.state.viewport}
+              mapboxApiAccessToken={process.env.REACT_APP_MAP_API}
+              mapStyle="mapbox://styles/mapbox/streets-v10"
+              onViewportChange={(viewport) => {
+                this.setState({viewport})}}
+            >
+
+            <DeckGL
                 {...this.state.viewport}
-                mapboxApiAccessToken={process.env.REACT_APP_MAP_API}
-                mapStyle="mapbox://styles/mapbox/streets-v10"
-                onViewportChange={(viewport) => {
-                  this.setState({viewport})}}
-              >
+                layers={[
+                  new GeoJsonLayer(this.state.linelayerstuff)
+                ]}
+            />
 
-              <DeckGL
-                  {...this.state.viewport}
-                  layers={[
-                    new GeoJsonLayer(this.state.linelayerstuff)
-                  ]}
-              />
+            <Marker latitude={this.state.markerstart.latitude} longitude={this.state.markerstart.longitude} offsetLeft={-25} offsetTop={-20}>
+              <img className = "truckimg" alt='' src ='https://i.imgur.com/3dgA0sR.png' />
+            </Marker>
 
-              <Marker latitude={this.state.markerstart.latitude} longitude={this.state.markerstart.longitude} offsetLeft={-25} offsetTop={-20}>
-                <img className = "truckimg" alt='' src ='https://i.imgur.com/3dgA0sR.png' />
-              </Marker>
+            {this.state.confirmshow && 
+            <Marker latitude={this.state.markerdest.latitude} longitude={this.state.markerdest.longitude} offsetLeft={-25} offsetTop={-10}>
+              <img className = "treasureimg" alt='' src ='http://placehold.it/20x20' />
+            </Marker>} 
 
-              {this.state.haveDestination && 
-              <Marker latitude={this.state.marker.latitude} longitude={this.state.marker.longitude} offsetLeft={-25} offsetTop={-20}>
-                <img className = "blip" alt='' src ='https://webstockreview.net/images/location-clipart-transparent-background.png' />
-              </Marker>}
+            {this.state.haveDestination && 
+            <Marker latitude={this.state.markerdest.latitude} longitude={this.state.markerdest.longitude} offsetLeft={-25} offsetTop={-10}>
+              <img className = "treasureimg" alt='' src ='http://placehold.it/20x20' />
+            </Marker>}
+            
+            {!this.state.haveDestination && 
+              <Geocoder
+              mapRef={this.mapRef}
+              containerRef={this.geocoderContainerRef}
+              onViewportChange={this.handleGeocoderViewportChange2}
+              mapboxApiAccessToken={process.env.REACT_APP_MAP_API}
+              onResult={this.startFunction}
+              placeholder="Current location"
+            />}
 
-              {this.state.confirmshow && 
-              <Marker latitude={this.state.markerdest.latitude} longitude={this.state.markerdest.longitude} offsetLeft={-25} offsetTop={-10}>
-                <img className = "treasureimg" alt='' src ='http://placehold.it/20x20' />
-              </Marker>} 
+            {!this.state.haveDestination && 
+              <Geocoder
+              mapRef={this.mapRef}
+              containerRef={this.geocoderContainerRef}
+              onViewportChange={this.handleGeocoderViewportChange}
+              mapboxApiAccessToken={process.env.REACT_APP_MAP_API}
+              onResult={this.resultFunction}
+              placeholder="Search destination"
+            />}
+          </MapGL>
 
-              {this.state.haveDestination && 
-              <Marker latitude={this.state.markerdest.latitude} longitude={this.state.markerdest.longitude} offsetLeft={-25} offsetTop={-10}>
-                <img className = "treasureimg" alt='' src ='http://placehold.it/20x20' />
-              </Marker>}
-              
-              {!this.state.haveDestination && 
-                <Geocoder
-                mapRef={this.mapRef}
-                containerRef={this.geocoderContainerRef}
-                onViewportChange={this.handleGeocoderViewportChange2}
-                mapboxApiAccessToken={process.env.REACT_APP_MAP_API}
-                onResult={this.startFunction}
-                placeholder="Current location"
-              />}
+          <div className="currentLocationContainer" onClick={this.goToCurrentLocation}>
+            <i className="fas fa-location-arrow fa-2x fa-vc"></i>
+          </div>
 
-              {!this.state.haveDestination && 
-                <Geocoder
-                mapRef={this.mapRef}
-                containerRef={this.geocoderContainerRef}
-                onViewportChange={this.handleGeocoderViewportChange}
-                mapboxApiAccessToken={process.env.REACT_APP_MAP_API}
-                onResult={this.resultFunction}
-                placeholder="Search destination"
-              />}
-            </MapGL>
+          <div className="overmap">
+            {this.state.haveDestination && 
+              <p className="directionp">Directions:<br></br>{this.state.directions[this.state.directionnum]}
+                {this.state.haveDestination && 
+                  <button id="EndRouteBtn" onClick={this.endrouteclick} className="endroutebtn">End Route</button>
+                }
+              </p>
+            }
 
-            <div className="currentLocationContainer" onClick={this.goToCurrentLocation}>
-              <i className="fas fa-location-arrow fa-2x fa-vc"></i>
-            </div>
+            {this.state.confirmshow && 
+              <button id="ConfirmBtn" onClick={this.confirmclick} className="confirmbtn">Go!</button>
+            }
+            
+          </div>
 
-            <div className="overmap">
-              {this.state.haveDestination && 
-              <p className="directionp">Directions:<br></br>{this.state.directions[this.state.directionnum]}</p>}
-              {this.state.confirmshow && 
-              <button id="ConfirmBtn" onClick={this.confirmclick} className="confirmbtn" color="success">Go!</button>}
-              {this.state.haveDestination && 
-              <button id="EndRouteBtn" onClick={this.endrouteclick} className="endroutebtn" color="danger">End Route</button>}
-            </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default Map;
+export default Map
