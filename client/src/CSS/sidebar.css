@@ -102,6 +102,10 @@
     transition: width .4s ease-in;
 }
 
+.main-menu > * {
+    z-index: 2;
+}
+
 .main-menu>ul {
     margin: 7px 0;
 }

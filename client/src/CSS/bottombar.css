@@ -12,6 +12,7 @@
     -moz-transition: height .7s ease-in;
     -o-transition: height .7s ease-in;
     transition: height .7s ease-in;
+    z-index: 2!important;
   }
 
   .openBottom {
