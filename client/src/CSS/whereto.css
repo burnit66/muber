@@ -4,6 +4,7 @@
   top: 20px;
   cursor: pointer;
   color: #454f62;
+  z-index: 3000;
 }
 
 .side {
@@ -64,6 +65,7 @@
   -moz-transition: top .7s ease-in;
   -o-transition: top .7s ease-in;
   transition: top .7s ease-in;
+  z-index: 20000;
 }
 
 .navContainer:after {

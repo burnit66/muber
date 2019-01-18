@@ -7,4 +7,5 @@ input:focus:not(.whereTo-field) {
     -moz-transition: margin .4s ease-in;
     -o-transition: margin .4s ease-in;
     transition: margin .4s ease-in;
+    height: 100vh;
 }
