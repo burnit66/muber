@@ -3,7 +3,15 @@ import auth0 from 'auth0-js'
 const LOGIN_SUCCESS_PAGE = '/home'
 const LOGIN_FAILURE_PAGE = '/404'
 
+const options = {
+    theme: {
+      logo: 'https://example.com/logo.png',
+      primaryColor: '#31324F'
+    }
+  }
+
 export default class Auth {
+
     auth0 = new auth0.WebAuth({
         domain: "1muber.auth0.com",
         clientID: "ChesZrWBK4VPY02VsMcaH0eAB2lipTGJ",
