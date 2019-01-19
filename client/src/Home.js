@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import './CSS/home.css'
 import Sidebar from './Sidebar'
 import WhereTo from './Whereto'
-import BottomBar from './Bottombar'
+// import BottomBar from './Bottombar'
 import CurrentLocation from './CurrentLocation'
 import Map from './Map'
 
@@ -23,7 +23,7 @@ import Map from './Map'
           <Sidebar/>
           <Map/>
           <CurrentLocation/>
-          <BottomBar/>
+          {/* <BottomBar/> */}
         </div>
       )
     }

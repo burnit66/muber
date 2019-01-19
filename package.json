@@ -21,12 +21,17 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "deck.gl": "^6.3.6",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "if-env": "^1.0.4",
     "react-dom": "^16.7.0",
     "react-facebook-login": "^4.1.1",
+    "react-map-gl": "^4.0.8",
+    "react-map-gl-geocoder": "^1.6.1",
     "react-router-dom": "^4.3.1",
-    "twilio": "^3.26.1"
+    "reactstrap": "^7.1.0",
+    "twilio": "^3.26.1",
+    "viewport-mercator-project": "^6.1.0"
   }
 }
