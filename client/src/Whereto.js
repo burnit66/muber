@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-//import axios from 'axios'
 import './CSS/whereto.css'
 
   class WhereTo extends Component {
@@ -48,7 +47,7 @@ import './CSS/whereto.css'
       }
 
       toggleSearch() {
-        document.getElementsByClassName("navContainer")[0].classList.toggle("openSearch")
+        document.getElementsByClassName("mapboxgl-control-container")[0].classList.toggle("openSearch")
         document.getElementById("expand").classList.add("openBottom")
         document.getElementById("thing").classList.add("rotate")
         document.getElementById("containers").classList.add("display")
@@ -70,7 +69,7 @@ import './CSS/whereto.css'
             <i className="fas fa-search"></i>
           </div>
 
-          <div className="navContainer">
+          {/* <div className="navContainer">
             <div className="side">
               <span className="internalImage1">&#9679;</span>
               <span className="internalImage2">&#9679;</span>
@@ -89,7 +88,8 @@ import './CSS/whereto.css'
               <label for="to">To</label>
               <input id="to" className="whereTo-field" value={this.state.locationTo} onChange={this.handleInputChange} onKeyPress={this.handleKeyPress} type="text" placeholder="My Home" name="locationTo" />
             </div>
-          </div>
+          </div> */}
+
         </div>
       )
     }

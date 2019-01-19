@@ -24,7 +24,7 @@ import './CSS/bottombar.css'
             <div className="opening" onClick={() => {this.toggleBottom()}}>
               <i id="thing" className="fas fa-angle-up fa-3x"></i>
               <div className="middle">
-                <h3>Book a Muber</h3>
+                <h3>Book a Müber</h3>
                 <span>Friends with trucks</span>
               </div>
             </div>

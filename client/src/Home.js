@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-//import axios from 'axios'
 import './CSS/home.css'
 import Sidebar from './Sidebar'
 import WhereTo from './Whereto'
 import BottomBar from './Bottombar'
-import CurrentLocation from './CurrentLocation'
 import Map from './Map'
 
   class Home extends Component {
@@ -22,7 +20,6 @@ import Map from './Map'
           <WhereTo/>
           <Sidebar/>
           <Map/>
-          <CurrentLocation/>
           <BottomBar/>
         </div>
       )
