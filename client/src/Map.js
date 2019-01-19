@@ -42,7 +42,7 @@ class Map extends Component {
         "type": "LineString",
         "coordinates": [[0, 0], [0, 0]]
       },
-      getLineWidth: 12,
+      getLineWidth: 8,
       getLineColor: [255,20,147]
     },
     directions: [],
@@ -113,16 +113,6 @@ class Map extends Component {
   }
 
   handleGeocoderViewportChange = (viewport) => {
-    return true
-    // const geocoderDefaultOverrides = { transitionDuration: 1000 }
-
-    // return this.handleViewportChange({
-    //   ...viewport,
-    //   ...geocoderDefaultOverrides
-    // })
-  }
-
-  handleGeocoderViewportChange2 = (viewport) => {
     const geocoderDefaultOverrides = { transitionDuration: 1700 }
 
     return this.handleViewportChange({
@@ -133,27 +123,27 @@ class Map extends Component {
 
   lineWidth = dist => {
     if(dist>3082328) {
-      return 4000
-    }
-    if(dist>2000000) {
-      return 3000
-    }
-    if(dist>600000) {
-      return 2000
-    }
-    if(dist>180770) {
-      return 1000
-    }
-    if(dist>81770) {
       return 400
     }
-    if(dist>30770) {
+    if(dist>2000000) {
       return 300
     }
-    if(dist>10770) {
+    if(dist>600000) {
       return 200
     }
-    return 100
+    if(dist>180770) {
+      return 100
+    }
+    if(dist>81770) {
+      return 40
+    }
+    if(dist>30770) {
+      return 30
+    }
+    if(dist>10770) {
+      return 20
+    }
+    return 8
   }
 
   handleErrors = (response) => {
@@ -238,7 +228,7 @@ class Map extends Component {
         height: vheight,
         latitude: this.state.markerstart.latitude,
         longitude: this.state.markerstart.longitude,
-        zoom: 14,
+        zoom: 16,
         pitch: 0,
         bearing: 0,
         transitionDuration: 1700
@@ -251,7 +241,7 @@ class Map extends Component {
           "type": "LineString",
           "coordinates": this.state.linelayerstuff.data.coordinates
         },
-        getLineWidth: 80,
+        getLineWidth: 8,
         getLineColor: [255,20,147]
       },
       intervalNum: interval
@@ -356,7 +346,7 @@ class Map extends Component {
               <Geocoder
               mapRef={this.mapRef}
               containerRef={this.geocoderContainerRef}
-              onViewportChange={this.handleGeocoderViewportChange2}
+              onViewportChange={this.handleGeocoderViewportChange}
               mapboxApiAccessToken={process.env.REACT_APP_MAP_API}
               onResult={this.startFunction}
               placeholder="Current location"
@@ -379,7 +369,7 @@ class Map extends Component {
 
           <div className="overmap">
             {this.state.haveDestination && 
-              <p className="directionp">Directions:<br></br>{this.state.directions[this.state.directionnum]}
+              <p className="directionp">{this.state.directions[this.state.directionnum]}
                 {this.state.haveDestination && 
                   <button id="EndRouteBtn" onClick={this.endrouteclick} className="endroutebtn">End Route</button>
                 }
