@@ -349,7 +349,7 @@ class Map extends Component {
               onViewportChange={this.handleGeocoderViewportChange}
               mapboxApiAccessToken={process.env.REACT_APP_MAP_API}
               onResult={this.startFunction}
-              placeholder="Current location"
+              placeholder="Pickup location"
             />}
 
             {!this.state.haveDestination && 
@@ -359,7 +359,7 @@ class Map extends Component {
               onViewportChange={this.handleGeocoderViewportChange}
               mapboxApiAccessToken={process.env.REACT_APP_MAP_API}
               onResult={this.resultFunction}
-              placeholder="Search destination"
+              placeholder="Drop off destination"
             />}
           </MapGL>
 

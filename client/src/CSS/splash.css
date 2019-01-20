@@ -25,33 +25,6 @@
     text-align: center;
 }
 
-.existingContainer {
-    padding-top: 20px;
-    text-align: center;
-    clear: both;
-}
-
-.existingContainer a {
-    color:#fff;
-}
-
-.fb-button {
-    background-color: #4267B2;
-    color: #ffffff;
-    width: 20em;
-    height: 3em;
-    border: none;
-    border-radius: 9px;
-    font-size: 1em;
-    cursor: pointer;
-    display: block;
-    margin: 0 auto;
-}
-
-.fa-facebook{
-    float:left;
-}
-
 .emailButton{
     background-color: #e9168c;
     color: #ffffff;
@@ -63,4 +36,19 @@
     cursor: pointer;
     margin:30px auto;
     display: block;
+}
+
+.auth0-lock-badge-bottom {
+    display: none!important;
+}
+
+.auth0-lock-center {
+    font-family:'Gibson', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+}
+
+.auth0-lock-overlay {
+    background: #111111!important;
+    opacity: .8!important;
 }

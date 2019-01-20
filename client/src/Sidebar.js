@@ -6,7 +6,6 @@ class Sidebar extends Component {
 
     logout() {
         this.props.auth.logout()
-        window.location.href = '/'
     }
 
     render() {
@@ -30,28 +29,28 @@ class Sidebar extends Component {
                     </li>
                     <li>
                         <a href="/history">
-                        <i className="fas fa-history fa-2x"></i>
-                                <span className="nav-text">Müber History</span>
+                            <i className="fas fa-history fa-2x"></i>
+                            <span className="nav-text">Müber History</span>
                         </a>
 
                     </li>
                     <li>
                         <a href="/billing">
                             <i className="fas fa-credit-card fa-2x"></i>
-                                <span className="nav-text">Billing Info</span>
+                            <span className="nav-text">Billing Info</span>
                         </a>
 
                     </li>
                     <li>
                         <a href="/future-mubers">
                         <i className="fas fa-clock fa-2x"></i>
-                                <span className="nav-text">Future Mübers</span>
+                        <span className="nav-text">Future Mübers</span>
                         </a>
                     </li>
                     <li>
                         <a href="/account">
                         <i className="fas fa-user-circle fa-2x"></i>
-                                <span className="nav-text">Account Info</span>
+                        <span className="nav-text">Account Info</span>
                         </a>
                     </li>
                 </ul>

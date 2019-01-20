@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './CSS/splash.css'
 
-
 class Splash extends Component {
 
     login() {

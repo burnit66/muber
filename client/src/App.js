@@ -10,6 +10,7 @@ import Billing from './Billing'
 import Terms from './Terms'
 import Auth from './Auth/Auth'
 import history from './history'
+import Callback from './Callback/Callback'
 
 const auth = new Auth()
 
@@ -18,6 +19,7 @@ const App = () => (
     <div>
       <Switch>
         <Route exact path="/" render={(props) => <Splash auth={auth} {...props} />} />
+        <Route path="/callback" render={(props) => <Callback {...props} />} />
         {/* <Route exact path="/signup" component={SignupContainer} /> */}
         <Route exact path="/mfa" component={MFA} />
         <Route exact path="/billing" component={Billing} />

@@ -15,10 +15,14 @@ export default class Auth {
       }
     },
     theme: {
-      logo: 'https://placehold.it/100x100/e9168c/fff',
-      primaryColor: '#31324F'
+      logo: 'https://i.imgur.com/3dgA0sR.png',
+      primaryColor: '#e9168c'
+    },
+    languageDictionary: {
+      emailInputPlaceholder: "something@youremail.com",
+      title: "Müber"
     }
-  });
+  })
 
   constructor() {
     this.handleAuthentication();
