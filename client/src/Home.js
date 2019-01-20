@@ -4,6 +4,10 @@ import Sidebar from './Sidebar'
 import WhereTo from './Whereto'
 import BottomBar from './Bottombar'
 import Map from './Map'
+import Auth from './Auth/Auth';
+import NoMatch from "./404"
+
+const auth = new Auth()
 
   class Home extends Component {
     constructor(props) {
@@ -15,12 +19,28 @@ import Map from './Map'
     }
 
     render() {
+      const { isAuthenticated } = this.props.auth;
+
       return (
-        <div className="homeContainer">
-          <WhereTo/>
-          <Sidebar/>
-          <Map/>
-          <BottomBar/>
+        <div>
+        {
+          isAuthenticated() && (
+            <div className="homeContainer">
+              <WhereTo/>
+              <Sidebar auth={auth}/>
+              <Map/>
+              <BottomBar/>
+            </div>
+          )
+        }
+
+        {
+          !isAuthenticated() && (
+            <div className="homeContainer">
+              <NoMatch/>
+            </div>
+          )
+        }
         </div>
       )
     }

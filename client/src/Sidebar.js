@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
-//import axios from 'axios'
+
 import './CSS/sidebar.css'
-const FBAPI = window.logOutFB;
 
 class Sidebar extends Component {
+
+    logout() {
+        this.props.auth.logout()
+        window.location.href = '/'
+    }
 
     render() {
       return (
@@ -12,7 +16,7 @@ class Sidebar extends Component {
 
                 <div class="profile-pic-container">
                     <a href="/profile">
-                        <img class="profile-pic" src="https://s3.amazonaws.com/uifaces/faces/twitter/nuraika/128.jpg" alt="" />
+                        <img class="profile-pic" src="http://placehold.it/400x400" alt="Profile Pic" />
                         <div class="rating-container"><span className="rating"><i class="fas fa-star"></i>4.5</span></div>
                     </a>
                 </div>
@@ -54,9 +58,9 @@ class Sidebar extends Component {
 
                 <ul className="logout">
                     <li>
-                        <a>
-                            <i className="fas fa-power-off fa-2x" onClick={ FBAPI }></i>
-                                <span className="nav-text">Logout</span>
+                        <a onClick={this.logout.bind(this)}>
+                            <i className="fas fa-power-off fa-2x"></i>
+                            <span className="nav-text">Logout</span>
                         </a>
                     </li>
                 </ul>

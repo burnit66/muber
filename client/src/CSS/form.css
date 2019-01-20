@@ -1,3 +1,7 @@
+input:focus:not(.whereTo-field) {
+    border: 2px solid #3ACCE1;
+}
+
 .login-container{
     color: #fff;
     background-color: #2b2f43;

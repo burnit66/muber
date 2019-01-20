@@ -9,6 +9,7 @@ const NoMatch = () => (
               🙄
             </span>
         </h1>
+        <p>Somthing went wrong! Try again later or try to <a href="/">login</a>.</p>
   </div>
 );
 
