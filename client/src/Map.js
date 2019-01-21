@@ -309,6 +309,8 @@ class Map extends Component {
   }
 
   render() {
+    const auth = this.props.auth
+        
     return (
       <div className="mapContainer">
 
@@ -331,7 +333,7 @@ class Map extends Component {
 
             {/* CURRENT LOCATION ALWAYS AND START ICON AFTER ACCEPT */}
             <Marker latitude={this.state.markerstart.latitude} longitude={this.state.markerstart.longitude} offsetLeft={-25} offsetTop={-20}>
-              <Icon/>
+              <Icon auth={auth}/>
             </Marker>
 
             {/* STARTING ICON AFTER ACCEPT DISAPPEARS AFTER ACCEPT */}

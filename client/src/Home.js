@@ -26,7 +26,7 @@ class Home extends Component {
           <div className="homeContainer">
             <WhereTo/>
             <Sidebar auth={auth}/>
-            <Map/>
+            <Map auth={auth}/>
             <BottomBar/>
           </div>
         )

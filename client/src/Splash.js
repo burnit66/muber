@@ -4,7 +4,7 @@ import './CSS/splash.css'
 class Splash extends Component {
 
     login() {
-        this.props.auth.login();
+        this.props.auth.login()
     }
 
     render() {

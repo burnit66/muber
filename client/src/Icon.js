@@ -2,10 +2,33 @@ import React, { Component } from 'react'
 import './CSS/icon.css'
 
 class Icon extends Component {
+    
+    componentWillMount() {
+        this.setState({
+            profile: {}
+        })
+
+        const { userProfile, getProfile } = this.props.auth;
+
+        if (!userProfile) {
+            getProfile((err, profile) => {
+                this.setState({
+                    profile
+                })
+            })
+        } else {
+            this.setState({
+                profile: userProfile
+            })
+        }
+    }
+
     render() {
+        const { profile } = this.state;
+
         return (
         <div>
-            <img className="locationIcon" alt="current location" src="http://placehold.it/50x50/333/333"/>
+            <img className="locationIcon" alt="current location" src={profile.picture}/>
         </div>
         )
     }
