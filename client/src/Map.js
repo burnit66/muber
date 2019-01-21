@@ -3,6 +3,7 @@ import MapGL, { Marker } from 'react-map-gl'
 import Geocoder from 'react-map-gl-geocoder'
 import DeckGL, { GeoJsonLayer } from 'deck.gl'
 import WebMercatorViewport from 'viewport-mercator-project'
+import Icon from './Icon'
 import './CSS/map.css'
 import './CSS/currentlocation.css'
 import './CSS/whereto.css'
@@ -312,14 +313,14 @@ class Map extends Component {
       <div className="mapContainer">
 
         <div>
-            <MapGL
+          <MapGL
               ref={this.mapRef} 
               {...this.state.viewport}
               mapboxApiAccessToken={process.env.REACT_APP_MAP_API}
               mapStyle="mapbox://styles/mapbox/streets-v10"
               onViewportChange={(viewport) => {
                 this.setState({viewport})}}
-            >
+          >
 
             <DeckGL
                 {...this.state.viewport}
@@ -328,19 +329,31 @@ class Map extends Component {
                 ]}
             />
 
+            {/* CURRENT LOCATION ALWAYS AND START ICON AFTER ACCEPT */}
             <Marker latitude={this.state.markerstart.latitude} longitude={this.state.markerstart.longitude} offsetLeft={-25} offsetTop={-20}>
-              <img className = "truckimg" alt='' src ='https://i.imgur.com/3dgA0sR.png' />
+              <Icon/>
             </Marker>
 
+            {/* STARTING ICON AFTER ACCEPT DISAPPEARS AFTER ACCEPT */}
             {this.state.confirmshow && 
-            <Marker latitude={this.state.markerdest.latitude} longitude={this.state.markerdest.longitude} offsetLeft={-25} offsetTop={-10}>
-              <img className = "treasureimg" alt='' src ='http://placehold.it/20x20' />
-            </Marker>} 
+              <Marker latitude={this.state.markerstart.latitude} longitude={this.state.markerstart.longitude} offsetLeft={-25} offsetTop={-20}>
+                <img className = "treasureimg" alt='' src ='http://placehold.it/20x20/000/000' />
+              </Marker>
+            }
 
+            {/* DESTINATION BEFORE ACCEPT */}
+            {this.state.confirmshow && 
+              <Marker latitude={this.state.markerdest.latitude} longitude={this.state.markerdest.longitude} offsetLeft={-25} offsetTop={-10}>
+                <img className = "treasureimg" alt='' src ='http://placehold.it/20x20/b4da55/b4da55' />
+              </Marker>
+            } 
+
+            {/* DESTINATION AFTER ACCEPT */}
             {this.state.haveDestination && 
-            <Marker latitude={this.state.markerdest.latitude} longitude={this.state.markerdest.longitude} offsetLeft={-25} offsetTop={-10}>
-              <img className = "treasureimg" alt='' src ='http://placehold.it/20x20' />
-            </Marker>}
+              <Marker latitude={this.state.markerdest.latitude} longitude={this.state.markerdest.longitude} offsetLeft={-25} offsetTop={-10}>
+                <img className = "truckimg" alt='' src ='https://i.imgur.com/3dgA0sR.png' />
+              </Marker>
+            }
             
             {!this.state.haveDestination && 
               <Geocoder

@@ -23,11 +23,13 @@ class Splash extends Component {
                 <p>Your on demand friend with a truck</p>
             </div>
 
-            {
-              !isAuthenticated() && (
-                <div className="emailContainer">
+            <div className="emailContainer">
                     <button className="emailButton" onClick={this.login.bind(this)}>Log in / Sign up</button>
                 </div>
+
+            {
+              isAuthenticated() && (
+                window.location.href = "/home"
                 )
             }
 

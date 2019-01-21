@@ -12,7 +12,7 @@
 }
 
 .fa-vc {
-    line-height: inherit !important;
+    line-height: inherit;
     vertical-align: bottom;
     color: #2b2f43;
 }
