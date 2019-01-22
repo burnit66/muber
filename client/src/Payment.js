@@ -1,7 +1,7 @@
 import React from "react"
 import DropIn from "braintree-web-drop-in-react"
 
-class Store extends React.Component {
+class Braintree extends React.Component {
   instance
 
   state = {
@@ -45,4 +45,4 @@ class Store extends React.Component {
   }
 }
 
-export default Store
+export default Braintree

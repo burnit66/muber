@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 //import axios from 'axios'
 import './CSS/bottombar.css'
+import Braintree from './Payment';
 
   class BottomBar extends Component {
     constructor(props) {
@@ -30,7 +31,8 @@ import './CSS/bottombar.css'
             </div>
 
             <div id="containers" className="bottomOuterContainer">
-              <div className="bottomInnercontainer">
+
+              {/* <div className="bottomInnercontainer">
                 <div>
                   <button className="bottomButton">
                     <i class="fas fa-truck-pickup"></i>
@@ -70,8 +72,12 @@ import './CSS/bottombar.css'
                     <span>&gt; 500lbs.</span>
                   </button>
                 </div>
-              </div>
+              </div> */}
+
+              <Braintree/>
+
             </div>
+
           </div>
         </div>
       )
