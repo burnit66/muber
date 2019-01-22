@@ -13,6 +13,7 @@ import Auth from './Auth/Auth'
 import history from './history'
 import Callback from './Callback/Callback'
 import Profile from './Profile';
+import Store from './Store'
 
 const auth = new Auth()
 
@@ -37,6 +38,7 @@ const App = () => (
         <Route exact path="/mfa" component={MFA} />
         <Route exact path="/billing" component={Billing} />
         <Route exact path="/terms" component={Terms} />
+        <Route exact path="/store" component={Store} />
 
         <Route path="/profile" render={(props) => (
             !auth.isAuthenticated() ? (
