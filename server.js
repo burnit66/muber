@@ -23,14 +23,22 @@ const gateway = braintree.connect({
 
 app.get("/server/client_token", function (req, res) {
   gateway.clientToken.generate({}, function (err, response) {
-    res.send(response.clientToken);
+    res.json(response.clientToken);
   });
 });
 
 app.post("/server/purchase/:nonce", function (req, res) {
   var nonceFromTheClient = req.body.payment_method_nonce;
-  // Use payment method nonce here
+  gateway.transaction.sale({
+    amount: "10.00",
+    paymentMethodNonce: nonceFromTheClient,
+    options: {
+      submitForSettlement: true
+    }
+  }, function (err, result) {
+  });
 });
+
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));

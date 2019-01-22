@@ -10,10 +10,8 @@ class Store extends React.Component {
 
   async componentDidMount() {
     // Get a client token for authorization from your server
-    const response = await fetch("http://localhost:3001/server/client_token")
-    console.log(response)
-    const clientToken = await response.json() // If returned as JSON string
-    console.log(clientToken)
+    const response = await fetch("server/client_token")
+    const clientToken = await response.json()
 
     this.setState({
       clientToken
@@ -23,7 +21,7 @@ class Store extends React.Component {
   async buy() {
     // Send the nonce to your server
     const { nonce } = await this.instance.requestPaymentMethod()
-    await fetch(`http://localhost:3001/server/purchase/${nonce}`)
+    await fetch(`server/purchase/${nonce}`)
   }
 
   render() {
