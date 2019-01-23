@@ -9,42 +9,39 @@ class BottomBar extends Component {
     this.state = this.props.map
   }
 
+  service
+  truckType
+
   componentDidMount() {
-    var x = document.getElementsByClassName('bottomButtonTop')
-    for (var i = 0; i < x.length; i++) {
+    const x = document.getElementsByClassName('bottomButtonTop')
+    for (let i = 0; i < x.length; i++) {
         x[i].addEventListener("click", function(){
-            
-        var selectedEl = document.querySelector(".selectedTop");
-        if(selectedEl){
-            selectedEl.classList.remove("selectedTop");
+        const selectedEl = document.querySelector(".selectedTop")
+        if (selectedEl){
+            selectedEl.classList.remove("selectedTop")
         }
-        this.classList.add("selectedTop");
-            
-        }, false);
+        this.classList.add("selectedTop")
+        }, false)
     }
 
-    var y = document.getElementsByClassName('bottomButtonBottom')
-    for (var j = 0; j < y.length; j++) {
+    const y = document.getElementsByClassName('bottomButtonBottom')
+    for (let j = 0; j < y.length; j++) {
         y[j].addEventListener("click", function(){
-            
-        var selectedEl = document.querySelector(".selectedBottom");
-        if(selectedEl){
-            selectedEl.classList.remove("selectedBottom");
+        const selectedEl = document.querySelector(".selectedBottom")
+        if (selectedEl){
+            selectedEl.classList.remove("selectedBottom")
         }
-        this.classList.add("selectedBottom");
-            
-        }, false);
+        this.classList.add("selectedBottom")
+        }, false)
     }
 
-    document.getElementById('nextBtn').addEventListener('click', function(){
-      var selectedElTop = document.querySelector(".selectedTop");
-      var selectedElBottom = document.querySelector(".selectedBottom");
-      if (selectedElTop && selectedElBottom)
-        console.log(selectedElTop + selectedElBottom)
-      else
-          alert('please choose both options')
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      this.service = document.querySelector(".selectedTop").attributes["data-truckservice"].value
+      this.truckType = document.querySelector(".selectedBottom").attributes["data-trucktype"].value
+      if (!(this.service && this.truckType)) {
+        alert('please choose both options')
+      }
     })
-
     this.props.onRef(this)
   }
 
@@ -68,19 +65,30 @@ class BottomBar extends Component {
 
     //time is in S needs to be min
     const rawTime = this.props.map.markerdest.totalTime
-    const time = rawTime * 60
+    const time = rawTime / 60
 
-    //INITAL COST BASED ON WHICH TRUCK TYPE
-    const cap = 4
+    //BASE COST BASED ON WHICH TRUCK TYPE
+    let cap = 0
 
-    //IF BUTTON = HELP DOUBLE THE COST
-    if (XX === XX) {
-      const trip = 2
+    //initial service
+    let service = 0
+
+    // IF BUTTON = HELP DOUBLE THE COST
+    if (this.service === 'help') {
+      service = 2
     } else {
-      const trip = 1
+      service = 1
     }
 
-    return cap + (cap * trip) + (.33 * time) + (.83 * dist)
+    if (this.truckType === 'moving') {
+      cap = 45
+    } else if (this.truckType === 'pickupPlus') {
+      cap = 30
+    } else {
+      cap = 15
+    }
+
+    return cap + (cap * service) + (.33 * time) + (.83 * dist)
   }
 
 
@@ -92,7 +100,7 @@ class BottomBar extends Component {
     const pickup = this.props.map.markerstart.address
     const dropoff = this.props.map.markerdest.address
 
-    this.formula()
+    console.log(this.formula())
 
     if (pickup && dropoff) {
       document.getElementsByClassName("loadOptions")[0].classList.toggle("hide")
@@ -116,20 +124,20 @@ class BottomBar extends Component {
             <div id="containers1" className="bottomOuterContainer">
               <div className="bottomInnercontainer">
                 <div>
-                  <button className="bottomButtonTop">
+                  <button className="bottomButtonTop" data-truckservice="only">
                     <i className="fas fa-truck-pickup"></i>
                     Truck Only
                   </button>
                 </div>
                 <div>
-                  <button className="bottomButtonTop">
+                  <button className="bottomButtonTop" data-truckservice="help">
                     <i className="fas fa-truck-pickup"></i>
                     Truck with Help
                   </button>
                 </div>
                 <div>
                   <button className="bottomButtonTop">
-                    <i className="fas fa-truck-pickup"></i>
+                    <i className="fas fa-truck-pickup" data-truckservice="future"></i>
                     Future Move
                   </button>
                 </div>
@@ -140,21 +148,21 @@ class BottomBar extends Component {
             <div id="containers2" className="bottomOuterContainer">
               <div className="bottomInnercontainer">
                 <div>
-                <button className="bottomButtonBottom">
+                <button className="bottomButtonBottom" data-trucktype="pickup">
                     <span className="bold">Small</span>
                     <br/>
                     <span>Pickup Truck</span>
                   </button>
                 </div>
                 <div>
-                  <button className="bottomButtonBottom">
+                  <button className="bottomButtonBottom" data-trucktype="pickupPlus">
                     <span className="bold">Medium</span>
                     <br/>
                     <span>Pickup Truck+</span>
                   </button>
                 </div>
                 <div>
-                  <button className="bottomButtonBottom">
+                  <button className="bottomButtonBottom" data-trucktype="moving">
                     <span className="bold">Large</span>
                     <br/>
                     <span>Moving Truck</span>
