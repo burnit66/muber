@@ -22,6 +22,7 @@
   "dependencies": {
     "auth0-lock": "^11.13.0",
     "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
     "braintree": "^2.14.0",
     "braintree-web-drop-in-react": "^1.0.5",
     "deck.gl": "^6.3.4",
@@ -30,6 +31,7 @@
     "fs": "0.0.1-security",
     "history": "^4.7.2",
     "if-env": "^1.0.4",
+    "mysql": "^2.16.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-facebook-login": "^4.1.1",

@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import './CSS/home.css'
 import Sidebar from './Sidebar'
 import WhereTo from './Whereto'
-import BottomBar from './Bottombar'
 import Map from './Map'
 import NoMatch from "./404"
 
@@ -27,7 +26,6 @@ class Home extends Component {
             <WhereTo/>
             <Sidebar auth={auth}/>
             <Map auth={auth}/>
-            <BottomBar/>
           </div>
         )
       }

@@ -3,6 +3,8 @@ import MapGL, { Marker } from 'react-map-gl'
 import Geocoder from 'react-map-gl-geocoder'
 import DeckGL, { GeoJsonLayer } from 'deck.gl'
 import WebMercatorViewport from 'viewport-mercator-project'
+
+import BottomBar from './Bottombar'
 import Icon from './Icon'
 import './CSS/map.css'
 import './CSS/currentlocation.css'
@@ -25,14 +27,16 @@ class Map extends Component {
     markerstart: {
       latitude: 41.4993,
       longitude: -81.6994,
+      address: ""
     },
     marker: {
       latitude: 41.4993,
-      longitude: -81.6994,
+      longitude: -81.6994
     },
     markerdest: {
       latitude: 0,
-      longitude:0 
+      longitude:0,
+      address: ""
     },
     confirmshow: false,
     haveDestination: false,
@@ -49,7 +53,7 @@ class Map extends Component {
     directions: [],
     directionnum: 0,
     intervalNum: 0
-  };
+  }
 
   mapRef = React.createRef()
   geocoderContainerRef= React.createRef()
@@ -68,13 +72,12 @@ class Map extends Component {
         },
         marker: {
           latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
+          longitude: position.coords.longitude
         },
         markerstart: {
           latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
+          longitude: position.coords.longitude
         },
-
         haveUsersLocation: true
       })
     }
@@ -92,7 +95,7 @@ class Map extends Component {
       this.setState({
         marker: {
           latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
+          longitude: position.coords.longitude
         },
         haveUsersLocation: true
       })
@@ -108,7 +111,7 @@ class Map extends Component {
   
   handleViewportChange = (viewport) => {
     this.setState({
-      viewport: { ...this.state.viewport, ...viewport }, 
+      viewport: { ...this.state.viewport, ...viewport }
     })
     
   }
@@ -155,10 +158,18 @@ class Map extends Component {
   }
 
   startFunction = (result) => {
+
+
+
+    console.log(result.result.place_name)
+
+
+
     this.setState({
       markerstart: {
         latitude: result.result.center[1],
-        longitude: result.result.center[0]
+        longitude: result.result.center[0],
+        address: result.result.place_name
       }
     })
   }
@@ -188,6 +199,14 @@ class Map extends Component {
             padding: 30,
             offset: [-100, -100]
           })
+
+
+
+          console.log(result.result.place_name)
+
+
+
+
           this.setState({
             viewport: {
               width: vwidth,
@@ -201,7 +220,8 @@ class Map extends Component {
             },
             markerdest: {
               latitude: result.result.center[1],
-              longitude: result.result.center[0]
+              longitude: result.result.center[0],
+              address: result.result.place_name
             },
             confirmshow: true,
             linelayerstuff: {
@@ -398,6 +418,7 @@ class Map extends Component {
           </div>
 
         </div>
+        <BottomBar map={this.state}/>
       </div>
     )
   }

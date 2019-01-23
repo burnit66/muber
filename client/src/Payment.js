@@ -9,7 +9,6 @@ class Braintree extends React.Component {
   }
 
   async componentDidMount() {
-    // Get a client token for authorization from your server
     const response = await fetch("server/client_token")
     const clientToken = await response.json()
 
@@ -19,7 +18,6 @@ class Braintree extends React.Component {
   }
 
   async buy() {
-    // Send the nonce to your server
     const { nonce } = await this.instance.requestPaymentMethod()
     await fetch(`server/purchase/${nonce}`)
   }
@@ -38,7 +36,7 @@ class Braintree extends React.Component {
             options={{ authorization: this.state.clientToken }}
             onInstance={instance => (this.instance = instance)}
           />
-          <button onClick={this.buy.bind(this)}>Buy</button>
+          <button className="buyButton" onClick={this.buy.bind(this)}>Buy</button>
         </div>
       )
     }

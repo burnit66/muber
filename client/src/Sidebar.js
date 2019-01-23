@@ -35,10 +35,10 @@ class Sidebar extends Component {
         <div className="sidebarContainer">
             <nav className="main-menu">
 
-                <div class="profile-pic-container">
+                <div className="profile-pic-container">
                     <a onClick={() => window.location.href = '/profile'}>
-                        <img class="profile-pic" src={profile.picture} alt="Profile Pic" />
-                        <div class="rating-container"><span className="rating">4.5</span></div>
+                        <img className="profile-pic" src={profile.picture} alt="Profile Pic" />
+                        <div className="rating-container"><span className="rating">4.5</span></div>
                     </a>
                 </div>
 

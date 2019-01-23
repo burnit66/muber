@@ -46,13 +46,6 @@ import './CSS/whereto.css'
         document.getElementsByClassName("homeContainer")[0].classList.toggle("shiftRight")
       }
 
-      toggleSearch() {
-        document.getElementsByClassName("mapboxgl-control-container")[0].classList.toggle("openSearch")
-        document.getElementById("expand").classList.add("openBottom")
-        document.getElementById("thing").classList.add("rotate")
-        document.getElementById("containers").classList.add("display")
-      }
-
     render() {
       return (
         <div className="whereTo">
@@ -64,31 +57,6 @@ import './CSS/whereto.css'
               <span className="bar"></span>
             </div>
           </div>
-
-          <div className="searchContainer" onClick={this.toggleSearch}>
-            <i className="fas fa-search"></i>
-          </div>
-
-          {/* <div className="navContainer">
-            <div className="side">
-              <span className="internalImage1">&#9679;</span>
-              <span className="internalImage2">&#9679;</span>
-              <span className="internalImage2">&#9679;</span>
-              <span className="internalImage2">&#9679;</span>
-              <span className="internalImage2">&#9679;</span>
-              <span className="internalImage1">&#9679;</span>
-            </div>
-            
-            <div className="inputContainer">
-              <label for="from">From</label>
-              <input id="from" className="whereTo-field" value={this.state.locationFrom} onChange={this.handleInputChange} onKeyPress={this.handleKeyPress} type="text" placeholder="My Location" name="locationFrom" />
-            
-              <hr/>
-
-              <label for="to">To</label>
-              <input id="to" className="whereTo-field" value={this.state.locationTo} onChange={this.handleInputChange} onKeyPress={this.handleKeyPress} type="text" placeholder="My Home" name="locationTo" />
-            </div>
-          </div> */}
 
         </div>
       )
