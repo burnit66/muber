@@ -14,45 +14,50 @@ const vheight = window.innerHeight
 const vwidth = window.innerWidth
 
 class Map extends Component {
-  state = {
-    viewport: {
-      width: vwidth,
-      height: vheight,
-      latitude: 41.4993,
-      longitude: -81.6994,
-      zoom: 0,
-      pitch: 0,
-      bearing: 0
-    },
-    markerstart: {
-      latitude: 41.4993,
-      longitude: -81.6994,
-      address: ""
-    },
-    marker: {
-      latitude: 41.4993,
-      longitude: -81.6994
-    },
-    markerdest: {
-      latitude: 0,
-      longitude:0,
-      address: ""
-    },
-    confirmshow: false,
-    haveDestination: false,
-    haveUsersLocation: false,
-    linelayerstuff: {
-      id: 'GeoJsonLayer', 
-      data: {
-        "type": "LineString",
-        "coordinates": [[0, 0], [0, 0]]
+  constructor(props) {
+    super(props);
+    this.state = {
+      viewport: {
+        width: vwidth,
+        height: vheight,
+        latitude: 0,
+        longitude: 0,
+        zoom: 0,
+        pitch: 0,
+        bearing: 0
       },
-      getLineWidth: 8,
-      getLineColor: [255,20,147]
-    },
-    directions: [],
-    directionnum: 0,
-    intervalNum: 0
+      markerstart: {
+        latitude: 0,
+        longitude: 0,
+        address: ""
+      },
+      marker: {
+        latitude: 0,
+        longitude: 0
+      },
+      markerdest: {
+        latitude: 0,
+        longitude:0,
+        address: "",
+        totalDistance: 0,
+        totalTime: 0
+      },
+      confirmshow: false,
+      haveDestination: false,
+      haveUsersLocation: false,
+      linelayerstuff: {
+        id: 'GeoJsonLayer', 
+        data: {
+          "type": "LineString",
+          "coordinates": [[0, 0], [0, 0]]
+        },
+        getLineWidth: 8,
+        getLineColor: [255,20,147]
+      },
+      directions: [],
+      directionnum: 0,
+      intervalNum: 0
+    }
   }
 
   mapRef = React.createRef()
@@ -76,7 +81,8 @@ class Map extends Component {
         },
         markerstart: {
           latitude: position.coords.latitude,
-          longitude: position.coords.longitude
+          longitude: position.coords.longitude,
+          address: ""
         },
         haveUsersLocation: true
       })
@@ -158,13 +164,6 @@ class Map extends Component {
   }
 
   startFunction = (result) => {
-
-
-
-    console.log(result.result.place_name)
-
-
-
     this.setState({
       markerstart: {
         latitude: result.result.center[1],
@@ -172,6 +171,10 @@ class Map extends Component {
         address: result.result.place_name
       }
     })
+  }
+
+  parentToggleBottom = () => {
+    this.child.toggleBottom()
   }
 
   resultFunction = (result) => {
@@ -188,10 +191,10 @@ class Map extends Component {
           }
           const dir = data.routes[0].geometry.coordinates
           const pdir = data.routes[0].legs[0].steps
-          for(let i=0;i<dir.length;i++) {
+          for (let i=0;i<dir.length;i++) {
             directions.push(dir[i])
           }
-          for(let i=0;i<pdir.length;i++) {
+          for (let i=0;i<pdir.length;i++) {
             plainDirections.push(pdir[i].maneuver.instruction)
           }
           const viewport = new WebMercatorViewport(this.state.viewport)
@@ -199,14 +202,6 @@ class Map extends Component {
             padding: 30,
             offset: [-100, -100]
           })
-
-
-
-          console.log(result.result.place_name)
-
-
-
-
           this.setState({
             viewport: {
               width: vwidth,
@@ -221,7 +216,9 @@ class Map extends Component {
             markerdest: {
               latitude: result.result.center[1],
               longitude: result.result.center[0],
-              address: result.result.place_name
+              address: result.result.place_name,
+              totalDistance: data.routes[0].distance,
+              totalTime: data.routes[0].duration
             },
             confirmshow: true,
             linelayerstuff: {
@@ -239,6 +236,7 @@ class Map extends Component {
       }).catch(error => {
           console.log(error)
     })
+    this.parentToggleBottom()
   }
   
   confirmclick = () => {
@@ -418,7 +416,7 @@ class Map extends Component {
           </div>
 
         </div>
-        <BottomBar map={this.state}/>
+        <BottomBar map={this.state} onRef={ref => (this.child = ref)}/>
       </div>
     )
   }

@@ -110,11 +110,6 @@
   font-size: 1.2em;
 }
 
-.display {
-  display: flex !important;
-  justify-content: center !important;
-}
-
 .loadHeading {
   color: #fff;
   text-align: center;
@@ -137,4 +132,24 @@
 
 .loadNext:hover {
     background-color: #d1137e;
+}
+
+.detailOptions {
+  max-width: 400px;
+  display: block;
+  margin: 0 auto;
+  color: #fff;
+}
+
+.pinkLine {
+  color: #e9168c;
+}
+
+.display {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.hide {
+  display: none;
 }
