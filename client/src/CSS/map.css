@@ -11,3 +11,8 @@
 .fa-location-arrow {
     line-height: 9px!important;
 }
+
+.userlist {
+    width: 100%;
+    height: 40px;
+}

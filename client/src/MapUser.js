@@ -4,14 +4,16 @@ import Geocoder from 'react-map-gl-geocoder'
 import DeckGL, { GeoJsonLayer } from 'deck.gl'
 import WebMercatorViewport from 'viewport-mercator-project'
 import Icon from './Icon'
+import { Link } from "react-router-dom";
 import './CSS/map.css'
 import './CSS/currentlocation.css'
 import './CSS/whereto.css'
 
 const vheight = window.innerHeight
 const vwidth = window.innerWidth
+const KEY = ""
 
-class Map extends Component {
+class MapUser extends Component {
   state = {
     viewport: {
       width: vwidth,
@@ -25,6 +27,7 @@ class Map extends Component {
     markerstart: {
       latitude: 41.4993,
       longitude: -81.6994,
+      address: ""
     },
     marker: {
       latitude: 41.4993,
@@ -32,7 +35,10 @@ class Map extends Component {
     },
     markerdest: {
       latitude: 0,
-      longitude:0 
+      longitude:0,
+      address: "",
+      totaldistance: 0,
+      totaltime: 0
     },
     confirmshow: false,
     haveDestination: false,
@@ -53,29 +59,38 @@ class Map extends Component {
 
   mapRef = React.createRef()
   geocoderContainerRef= React.createRef()
-
+  
   componentDidMount() {
     const success = (position) => {
-      this.setState({
-        viewport: {
-          width: vwidth,
-          height: vheight,
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          zoom: 17,
-          pitch: 0,
-          bearing: 0
-        },
-        marker: {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        },
-        markerstart: {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        },
-
-        haveUsersLocation: true
+      fetch("https://api.mapbox.com/geocoding/v5/mapbox.places/"+ position.coords.longitude + "," + position.coords.latitude + ".json?access_token=" + KEY)
+      .then(this.handleErrors)
+      .then(response => {
+        response.json().then(data => {
+          this.setState({
+            viewport: {
+              width: vwidth,
+              height: vheight,
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+              zoom: 17,
+              pitch: 0,
+              bearing: 0
+            },
+            marker: {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            },
+            markerstart: {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+              address: data.features[0].place_name
+            },
+    
+            haveUsersLocation: true
+          })
+      })
+      }).catch(error => {
+          console.log(error)
       })
     }
     const error = (err) => {
@@ -86,6 +101,29 @@ class Map extends Component {
     }
     navigator.geolocation.getCurrentPosition(success, error, options) 
   }
+
+  callApi = async () => {
+    const response = await fetch('/api/locations');
+    const body = await response.json();
+    if (response.status !== 200) throw Error(body.message);
+    return body;
+  };
+
+  postLocations = async (lon1, lat1, lon2, lat2, pick, drop) => {
+    const response = await fetch('/api/locations', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ lonp: lon1, latp: lat1, lond: lon2, latd: lat2, pickup: pick, dropoff: drop })
+    });
+  };
+
+  truncateApi = async () => {
+    const response = await fetch('/api/locations', {
+      method: 'DELETE'
+    });
+  };
 
   setPosition = () => {
     const success = (position) => {
@@ -124,27 +162,27 @@ class Map extends Component {
 
   lineWidth = dist => {
     if(dist>3082328) {
-      return 400
+      return 4000
     }
     if(dist>2000000) {
-      return 300
+      return 3000
     }
     if(dist>600000) {
-      return 200
+      return 2000
     }
     if(dist>180770) {
-      return 100
+      return 1000
     }
     if(dist>81770) {
-      return 40
+      return 400
     }
     if(dist>30770) {
-      return 30
+      return 300
     }
     if(dist>10770) {
-      return 20
+      return 200
     }
-    return 8
+    return 80
   }
 
   handleErrors = (response) => {
@@ -158,16 +196,18 @@ class Map extends Component {
     this.setState({
       markerstart: {
         latitude: result.result.center[1],
-        longitude: result.result.center[0]
+        longitude: result.result.center[0],
+        address: result.result.place_name
       }
     })
   }
 
   resultFunction = (result) => {
+    console.log(result)
     const directions = [[this.state.markerstart.longitude, this.state.markerstart.latitude]]
     const plainDirections = []
     fetch('https://api.mapbox.com/directions/v5/mapbox/driving/' + this.state.markerstart.longitude + ',' + this.state.markerstart.latitude + ';' +
-      result.result.center[0] + ',' + result.result.center[1] + '?steps=true&geometries=geojson&access_token=' + process.env.REACT_APP_MAP_API)
+      result.result.center[0] + ',' + result.result.center[1] + '?steps=true&geometries=geojson&access_token=' + KEY)
       .then(this.handleErrors)
       .then(response => {
         response.json().then(data => {
@@ -201,7 +241,8 @@ class Map extends Component {
             },
             markerdest: {
               latitude: result.result.center[1],
-              longitude: result.result.center[0]
+              longitude: result.result.center[0],
+              address: result.result.place_name
             },
             confirmshow: true,
             linelayerstuff: {
@@ -223,17 +264,10 @@ class Map extends Component {
   
   confirmclick = () => {
     const interval = setInterval(this.setPosition, 3000)
+    this.postLocations(this.state.markerstart.longitude, this.state.markerstart.latitude,
+                       this.state.markerdest.longitude, this.state.markerdest.latitude,
+                       this.state.markerstart.address, this.state.markerdest.address)
     this.setState({
-      viewport: {
-        width: vwidth,
-        height: vheight,
-        latitude: this.state.markerstart.latitude,
-        longitude: this.state.markerstart.longitude,
-        zoom: 16,
-        pitch: 0,
-        bearing: 0,
-        transitionDuration: 1700
-      },
       confirmshow: false,
       haveDestination: true,
       linelayerstuff: {
@@ -242,7 +276,7 @@ class Map extends Component {
           "type": "LineString",
           "coordinates": this.state.linelayerstuff.data.coordinates
         },
-        getLineWidth: 8,
+        getLineWidth: this.state.linelayerstuff.getLineWidth,
         getLineColor: [255,20,147]
       },
       intervalNum: interval
@@ -251,36 +285,35 @@ class Map extends Component {
 
   endrouteclick = () => {
     const success = (position) => {
-      this.setState({
-        viewport: {
-          width: vwidth,
-          height: vheight,
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          zoom: 14,
-          pitch: 0,
-          bearing: 0,
-          transitionDuration: 1700
-        },
-        marker: {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        },
-        markerstart: {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        },
-        linelayerstuff: {
-          id: 'GeoJsonLayer', 
-          data: {
-            "type": "LineString",
-            "coordinates": [[0,0], [0,0]]
-          },
-          getLineWidth: 0,
-          getLineColor: [255,20,147]
-        },
-        haveUsersLocation: true,
-        haveDestination: false
+      fetch("https://api.mapbox.com/geocoding/v5/mapbox.places/"+ position.coords.longitude + "," + position.coords.latitude + ".json?access_token=" + KEY)
+      .then(this.handleErrors)
+      .then(response => {
+        response.json().then(data => {
+          this.setState({
+            viewport: {
+              width: vwidth,
+              height: vheight,
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+              zoom: 17,
+              pitch: 0,
+              bearing: 0
+            },
+            marker: {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            },
+            markerstart: {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+              address: data.features[0].place_name
+            },
+    
+            haveUsersLocation: true
+          })
+      })
+      }).catch(error => {
+          console.log(error)
       })
     }
     const error = (err) => {
@@ -289,7 +322,7 @@ class Map extends Component {
     const options = {
       enableHighAccuracy: true
     }
-    navigator.geolocation.getCurrentPosition(success, error, options)
+    navigator.geolocation.getCurrentPosition(success, error, options) 
     clearInterval(this.state.intervalNum)
   }
 
@@ -313,12 +346,14 @@ class Map extends Component {
         
     return (
       <div className="mapContainer">
-
+        <Link to={"/driver"}>
+            <p className="link">Driver side</p>
+        </Link>
         <div>
           <MapGL
               ref={this.mapRef} 
               {...this.state.viewport}
-              mapboxApiAccessToken={process.env.REACT_APP_MAP_API}
+              mapboxApiAccessToken={KEY}
               mapStyle="mapbox://styles/mapbox/streets-v10"
               onViewportChange={(viewport) => {
                 this.setState({viewport})}}
@@ -362,7 +397,7 @@ class Map extends Component {
               mapRef={this.mapRef}
               containerRef={this.geocoderContainerRef}
               onViewportChange={this.handleGeocoderViewportChange}
-              mapboxApiAccessToken={process.env.REACT_APP_MAP_API}
+              mapboxApiAccessToken={KEY}
               onResult={this.startFunction}
               placeholder="Pickup location"
             />}
@@ -372,7 +407,7 @@ class Map extends Component {
               mapRef={this.mapRef}
               containerRef={this.geocoderContainerRef}
               onViewportChange={this.handleGeocoderViewportChange}
-              mapboxApiAccessToken={process.env.REACT_APP_MAP_API}
+              mapboxApiAccessToken={KEY}
               onResult={this.resultFunction}
               placeholder="Drop off destination"
             />}
@@ -384,17 +419,14 @@ class Map extends Component {
 
           <div className="overmap">
             {this.state.haveDestination && 
-              <p className="directionp">{this.state.directions[this.state.directionnum]}
-                {this.state.haveDestination && 
-                  <button id="EndRouteBtn" onClick={this.endrouteclick} className="endroutebtn">End Route</button>
-                }
+              <p className="directionp">
+                Waiting for driver
               </p>
             }
 
             {this.state.confirmshow && 
               <button id="ConfirmBtn" onClick={this.confirmclick} className="confirmbtn">Go!</button>
             }
-            
           </div>
 
         </div>
@@ -403,4 +435,4 @@ class Map extends Component {
   }
 }
 
-export default Map
+export default MapUser
