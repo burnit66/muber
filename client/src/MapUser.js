@@ -11,7 +11,7 @@ import './CSS/whereto.css'
 
 const vheight = window.innerHeight
 const vwidth = window.innerWidth
-const KEY = ""
+const KEY = "pk.eyJ1IjoiZnJleW04MjciLCJhIjoiY2pwdWpwYW9rMGhqYzQ4cXoxZWRlMGo5YSJ9.3MH5rhVEWOMgzRtpmmLJHA"
 
 class MapUser extends Component {
   state = {
@@ -374,21 +374,21 @@ class MapUser extends Component {
             {/* STARTING ICON AFTER ACCEPT DISAPPEARS AFTER ACCEPT */}
             {this.state.confirmshow && 
               <Marker latitude={this.state.markerstart.latitude} longitude={this.state.markerstart.longitude} offsetLeft={-25} offsetTop={-20}>
-                <img className = "treasureimg" alt='' src ='http://placehold.it/20x20/000/000' />
+                <img className = "driveimg" alt='' src ='http://placehold.it/20x20/000/000' />
               </Marker>
             }
 
             {/* DESTINATION BEFORE ACCEPT */}
             {this.state.confirmshow && 
               <Marker latitude={this.state.markerdest.latitude} longitude={this.state.markerdest.longitude} offsetLeft={-25} offsetTop={-10}>
-                <img className = "treasureimg" alt='' src ='http://placehold.it/20x20/b4da55/b4da55' />
+                <img className = "driveimg" alt='' src ='https://pngimg.com/uploads/treasure_chest/treasure_chest_PNG154.png' />
               </Marker>
             } 
 
             {/* DESTINATION AFTER ACCEPT */}
             {this.state.haveDestination && 
               <Marker latitude={this.state.markerdest.latitude} longitude={this.state.markerdest.longitude} offsetLeft={-25} offsetTop={-10}>
-                <img className = "truckimg" alt='' src ='https://i.imgur.com/3dgA0sR.png' />
+                <img className = "driveimg" alt='' src ='https://pngimg.com/uploads/treasure_chest/treasure_chest_PNG154.png' />
               </Marker>
             }
             
@@ -420,7 +420,7 @@ class MapUser extends Component {
           <div className="overmap">
             {this.state.haveDestination && 
               <p className="directionp">
-                Waiting for driver
+                Request Submitted! Waiting for driver.
               </p>
             }
 

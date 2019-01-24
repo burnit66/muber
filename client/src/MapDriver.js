@@ -12,7 +12,7 @@ import { runInThisContext } from 'vm';
 
 const vheight = window.innerHeight
 const vwidth = window.innerWidth
-const KEY = ""
+const KEY = "pk.eyJ1IjoiZnJleW04MjciLCJhIjoiY2pwdWpwYW9rMGhqYzQ4cXoxZWRlMGo5YSJ9.3MH5rhVEWOMgzRtpmmLJHA"
 
 class MapDriver extends Component {
   state = {
@@ -49,6 +49,15 @@ class MapDriver extends Component {
       getLineWidth: 8,
       getLineColor: [255,20,147]
     },
+    linelayerstuff2: {
+      id: 'GeoJsonLayer', 
+      data: {
+        "type": "LineString",
+        "coordinates": [[0, 0], [0, 0]]
+      },
+      getLineWidth: 8,
+      getLineColor: [255,20,147]
+    },
     directions: [],
     directionnum: 0,
     intervalNum: 0,
@@ -64,7 +73,6 @@ class MapDriver extends Component {
         this.setState({
           userrequests: response.locations
         })
-        console.log(this.state.userrequests)
     })
     const success = (position) => {
       this.setState({
@@ -82,8 +90,8 @@ class MapDriver extends Component {
           longitude: position.coords.longitude,
         },
         markerstart: {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
+          latitude: 0,
+          longitude: 0
         },
 
         haveUsersLocation: true
@@ -204,8 +212,6 @@ class MapDriver extends Component {
       },
       intervalNum: interval
     })
-    this.postLocations(this.state.markerstart.longitude, this.state.markerstart.latitude)
-    this.postLocations(this.state.markerdest.longitude, this.state.markerdest.latitude)
   }
 
   endrouteclick = () => {
@@ -272,9 +278,16 @@ class MapDriver extends Component {
     const latp = this.state.userrequests[event.target.value].latp
     const lond = this.state.userrequests[event.target.value].lond
     const latd = this.state.userrequests[event.target.value].latd
+    this.setState({
+      directions: []
+    })
+    this.driverroutes(this.state.marker.longitude, this.state.marker.latitude, lonp, latp, false)
+    this.driverroutes(lonp, latp, lond, latd, true)
+  };
 
+  driverroutes = (lonp, latp, lond, latd, ifUser) => {
     const directions = [[lonp, latp]]
-    const plainDirections = []
+    const plainDirections = this.state.directions
     fetch('https://api.mapbox.com/directions/v5/mapbox/driving/' + lonp + ',' + latp + ';' + lond + ',' + latd + '?steps=true&geometries=geojson&access_token=' + KEY)
       .then(this.handleErrors)
       .then(response => {
@@ -307,27 +320,51 @@ class MapDriver extends Component {
               bearing: 0,
               transitionDuration: 1700
             },
-            markerdest: {
-              latitude: latd,
-              longitude: lond
-            },
             confirmshow: true,
-            linelayerstuff: {
-              id: 'GeoJsonLayer', 
-              data: {
-                "type": "LineString",
-                "coordinates": directions
-              },
-              getLineWidth: this.lineWidth(data.routes[0].distance),
-              getLineColor: [255,20,147]
-            },
             directions: plainDirections
           })
+          if(ifUser) {
+            this.setState({
+              markerstart: {
+                latitude: latp,
+                longitude: lonp
+              },
+              markerdest: {
+                latitude: latd,
+                longitude: lond,
+              },
+              linelayerstuff: {
+                id: 'GeoJsonLayer', 
+                data: {
+                  "type": "LineString",
+                  "coordinates": directions
+                },
+                getLineWidth: this.lineWidth(data.routes[0].distance),
+                getLineColor: [255,20,147]
+              },
+            })
+          }else{
+            this.setState({
+              linelayerstuff2: {
+                id: 'GeoJsonLayer', 
+                data: {
+                  "type": "LineString",
+                  "coordinates": directions
+                },
+                getLineWidth: this.lineWidth(data.routes[0].distance),
+                getLineColor: [0,255,255]
+              },
+            })
+          }
       })
       }).catch(error => {
           console.log(error)
       })
-  };
+  }
+
+  driverpick = () => {
+    console.log(this.state.markerstart)
+  }
 
   render() {
     const auth = this.props.auth               
@@ -340,6 +377,13 @@ class MapDriver extends Component {
             <option value="-1">User Requests</option>
             {this.state.userrequests.map((x, i) => (
               <option className="options" value={i} key={x.id}>ID: {x.id} PICKUP: {x.pickup} DROPOFF: {x.dropoff}</option>
+            ))}
+        </select>
+        <button class="driverpick" onClick={this.driverpick}>Pick this route</button>
+        <select className="directionlist">
+            <option value="-1">Directions</option>
+            {this.state.directions.map((x, i) => (
+              <option className="options" value={i} key={x.id}>{this.state.directions[i]}</option>
             ))}
         </select>
         <div>
@@ -355,35 +399,24 @@ class MapDriver extends Component {
             <DeckGL
                 {...this.state.viewport}
                 layers={[
-                  new GeoJsonLayer(this.state.linelayerstuff)
+                  new GeoJsonLayer(this.state.linelayerstuff),
+                  new GeoJsonLayer(this.state.linelayerstuff2)
                 ]}
             />
 
             {/* CURRENT LOCATION ALWAYS AND START ICON AFTER ACCEPT */}
             <Marker latitude={this.state.markerstart.latitude} longitude={this.state.markerstart.longitude} offsetLeft={-25} offsetTop={-20}>
+              <img className = "driveimg" alt='' src ='https://i.imgur.com/ZUyRrkh.png' />
+            </Marker>
+
+            <Marker latitude={this.state.marker.latitude} longitude={this.state.marker.longitude} offsetLeft={-25} offsetTop={-20}>
               <Icon auth={auth}/>
             </Marker>
 
-            {/* STARTING ICON AFTER ACCEPT DISAPPEARS AFTER ACCEPT */}
-            {this.state.confirmshow && 
-              <Marker latitude={this.state.markerstart.latitude} longitude={this.state.markerstart.longitude} offsetLeft={-25} offsetTop={-20}>
-                <img className = "treasureimg" alt='' src ='http://placehold.it/20x20/000/000' />
-              </Marker>
-            }
-
             {/* DESTINATION BEFORE ACCEPT */}
-            {this.state.confirmshow && 
-              <Marker latitude={this.state.markerdest.latitude} longitude={this.state.markerdest.longitude} offsetLeft={-25} offsetTop={-10}>
-                <img className = "treasureimg" alt='' src ='http://placehold.it/20x20/b4da55/b4da55' />
-              </Marker>
-            } 
-
-            {/* DESTINATION AFTER ACCEPT */}
-            {this.state.haveDestination && 
-              <Marker latitude={this.state.markerdest.latitude} longitude={this.state.markerdest.longitude} offsetLeft={-25} offsetTop={-10}>
-                <img className = "truckimg" alt='' src ='https://i.imgur.com/3dgA0sR.png' />
-              </Marker>
-            }
+            <Marker latitude={this.state.markerdest.latitude} longitude={this.state.markerdest.longitude} offsetLeft={-25} offsetTop={-10}>
+              <img className = "driveimg" alt='' src ='https://pngimg.com/uploads/treasure_chest/treasure_chest_PNG154.png' />
+            </Marker>
           </MapGL>
 
           <div className="currentLocationContainer" onClick={this.goToCurrentLocation}>
