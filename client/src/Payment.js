@@ -36,7 +36,7 @@ class Braintree extends React.Component {
             options={{ authorization: this.state.clientToken }}
             onInstance={instance => (this.instance = instance)}
           />
-          <button className="buyButton" onClick={this.buy.bind(this)}>Buy</button>
+          {/* <button className="buyButton" onClick={this.buy.bind(this)}>Buy</button> */}
         </div>
       )
     }

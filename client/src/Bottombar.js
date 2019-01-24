@@ -88,7 +88,7 @@ class BottomBar extends Component {
       cap = 15
     }
 
-    return cap + (cap * service) + (.33 * time) + (.83 * dist)
+    return (cap + (cap * service) + (.33 * time) + (.83 * dist)).toFixed(2)
   }
 
 
@@ -97,6 +97,7 @@ class BottomBar extends Component {
     document.getElementsByClassName("mapboxgl-control-container")[0].classList.add("openSearch")
 
     this.toggleBottom()
+
     const pickup = this.props.map.markerstart.address
     const dropoff = this.props.map.markerdest.address
 
@@ -104,6 +105,14 @@ class BottomBar extends Component {
 
     if (pickup && dropoff) {
       document.getElementsByClassName("loadOptions")[0].classList.toggle("hide")
+      document.getElementsByClassName("detailOptions")[0].classList.toggle("hide")
+
+      document.getElementById("startAddress").innerHTML = pickup
+      document.getElementById("endAddress").innerHTML = dropoff
+      document.getElementById("loadSize").innerHTML = this.truckType
+      document.getElementById("driverHelp").innerHTML = this.service
+      const finalCost = this.formula()
+      document.getElementById("totalCost").innerHTML = finalCost
     } 
   }
 
@@ -124,7 +133,7 @@ class BottomBar extends Component {
             <div id="containers1" className="bottomOuterContainer">
               <div className="bottomInnercontainer">
                 <div>
-                  <button className="bottomButtonTop" data-truckservice="only">
+                  <button className="bottomButtonTop" data-truckservice="truck">
                     <i className="fas fa-truck-pickup"></i>
                     Truck Only
                   </button>
@@ -180,9 +189,11 @@ class BottomBar extends Component {
             <p className="detailsConfirm">Driver Help: <span id="driverHelp"></span></p>
             <hr className="pinkLine"/>
             <p className="detailsConfirm">ESTIMATED TOTAL: <span id="totalCost"></span></p>
-          </div>
 
-            {/* <Braintree/> */}
+            <Braintree/>
+
+            <button id="nextBrain" className="loadNext" onClick={this.props.map.confirmclick}>Book my Müber</button>
+          </div>
 
           </div>
 
