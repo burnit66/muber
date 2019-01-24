@@ -66,7 +66,7 @@ class MapUser extends Component {
 
   componentDidMount() {
     const success = (position) => {
-      fetch("https://api.mapbox.com/geocoding/v5/mapbox.places/"+ position.coords.longitude + "," + position.coords.latitude + ".json?access_token=" + process.env.REACT_APP_MAP_API)
+      fetch("https://api.mapbox.com/geocoding/v5/mapbox.places/"+ position.coords.longitude + "," + position.coords.latitude + ".json?access_token=" + KEY)
       .then(this.handleErrors)
       .then(response => {
         response.json().then(data => {
@@ -214,7 +214,7 @@ class MapUser extends Component {
     const directions = [[this.state.markerstart.longitude, this.state.markerstart.latitude]]
     const plainDirections = []
     fetch('https://api.mapbox.com/directions/v5/mapbox/driving/' + this.state.markerstart.longitude + ',' + this.state.markerstart.latitude + ';' +
-      result.result.center[0] + ',' + result.result.center[1] + '?steps=true&geometries=geojson&access_token=' + process.env.REACT_APP_MAP_API)
+      result.result.center[0] + ',' + result.result.center[1] + '?steps=true&geometries=geojson&access_token=' + KEY)
       .then(this.handleErrors)
       .then(response => {
         response.json().then(data => {
@@ -295,7 +295,7 @@ class MapUser extends Component {
 
   endrouteclick = () => {
     const success = (position) => {
-      fetch("https://api.mapbox.com/geocoding/v5/mapbox.places/"+ position.coords.longitude + "," + position.coords.latitude + ".json?access_token=" + process.env.REACT_APP_MAP_API)
+      fetch("https://api.mapbox.com/geocoding/v5/mapbox.places/"+ position.coords.longitude + "," + position.coords.latitude + ".json?access_token=" + KEY)
       .then(this.handleErrors)
       .then(response => {
         response.json().then(data => {
@@ -365,7 +365,7 @@ class MapUser extends Component {
           <MapGL
               ref={this.mapRef} 
               {...this.state.viewport}
-              mapboxApiAccessToken={process.env.REACT_APP_MAP_API}
+              mapboxApiAccessToken={KEY}
               mapStyle="mapbox://styles/mapbox/streets-v10"
               onViewportChange={(viewport) => {
                 this.setState({viewport})}}
@@ -409,7 +409,7 @@ class MapUser extends Component {
               mapRef={this.mapRef}
               containerRef={this.geocoderContainerRef}
               onViewportChange={this.handleGeocoderViewportChange}
-              mapboxApiAccessToken={process.env.REACT_APP_MAP_API}
+              mapboxApiAccessToken={KEY}
               onResult={this.startFunction}
               placeholder="Pickup location"
             />}
@@ -419,7 +419,7 @@ class MapUser extends Component {
               mapRef={this.mapRef}
               containerRef={this.geocoderContainerRef}
               onViewportChange={this.handleGeocoderViewportChange}
-              mapboxApiAccessToken={process.env.REACT_APP_MAP_API}
+              mapboxApiAccessToken={KEY}
               onResult={this.resultFunction}
               placeholder="Drop off destination"
             />}
