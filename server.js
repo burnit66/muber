@@ -4,7 +4,6 @@ const bodyParser = require("body-parser")
 const PORT = process.env.PORT || 3001;
 const app = express();
 require('dotenv').config();
-require("./routes")(app);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -43,14 +42,12 @@ app.post("/server/purchase/:nonce", function (req, res) {
 });
 
 
-// Define middleware here
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
+require("./routes")(app);
 
 app.listen(PORT, function() {
   console.log(`🌎 ==> Server now on port ${PORT}!`);

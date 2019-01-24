@@ -10,13 +10,15 @@ module.exports = function (app) {
     })
 
     app.post('/api/locations', (req, res) => {
-        connection.query("INSERT INTO locations (longitude, latitude) VALUES (?, ?)", [req.body.longitude, req.body.latitude], function (err, data) {
-            if (err) {
-                console.log(err)
-            } else {
-                console.log("Post Successful")
-            }
-        });
+        connection.query("INSERT INTO locations (lonp, latp, lond, latd, pickup, dropoff) VALUES (?, ?, ?, ?, ?, ?)",
+            [req.body.lonp, req.body.latp, req.body.lond, req.body.latd, req.body.pickup, req.body.dropoff],
+            function (err, data) {
+                if (err) {
+                    console.log(err)
+                } else {
+                    console.log("Post Successful")
+                }
+            });
     });
 
     app.delete('/api/locations', (req, res) => {
