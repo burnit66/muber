@@ -14,6 +14,7 @@
 .title {
     font-size: 3em;
     text-align: center;
+    font-weight: lighter;
 }
 
 .colorU {
@@ -51,4 +52,14 @@
 .auth0-lock-overlay {
     background: #111111!important;
     opacity: .8!important;
+}
+
+.termsSignupContainer {
+    padding-top:30px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.termsSignupContainer p a {
+    color: #fff;
 }

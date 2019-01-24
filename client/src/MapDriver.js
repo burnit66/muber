@@ -1,7 +1,7 @@
 import React, { Component}  from 'react'
 import MapGL, { Marker } from 'react-map-gl'
-import Geocoder from 'react-map-gl-geocoder'
 import DeckGL, { GeoJsonLayer } from 'deck.gl'
+import { Link } from "react-router-dom";
 import WebMercatorViewport from 'viewport-mercator-project'
 import Icon from './Icon'
 import './CSS/map.css'
@@ -11,7 +11,7 @@ import './CSS/whereto.css'
 const vheight = window.innerHeight
 const vwidth = window.innerWidth
 
-class Map extends Component {
+class MapDriver extends Component {
   state = {
     viewport: {
       width: vwidth,
@@ -48,13 +48,21 @@ class Map extends Component {
     },
     directions: [],
     directionnum: 0,
-    intervalNum: 0
+    intervalNum: 0,
+    userrequests: [{id: 0, longitude: 0, latitude: 0, longitude: 0, latitude: 0, pickup: "", dropoff: ""}],
   };
 
   mapRef = React.createRef()
   geocoderContainerRef= React.createRef()
-
+  
   componentDidMount() {
+    this.callApi()
+      .then(response => {
+        this.setState({
+          userrequests: response.locations
+        })
+        console.log(this.state.userrequests)
+    })
     const success = (position) => {
       this.setState({
         viewport: {
@@ -86,6 +94,29 @@ class Map extends Component {
     }
     navigator.geolocation.getCurrentPosition(success, error, options) 
   }
+
+  callApi = async () => {
+    const response = await fetch('/api/locations');
+    const body = await response.json();
+    if (response.status !== 200) throw Error(body.message);
+    return body;
+  };
+
+  postLocations = async (long, lat) => {
+    const response = await fetch('/api/locations', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ longitude: long, latitude: lat })
+    });
+  };
+
+  truncateApi = async () => {
+    const response = await fetch('/api/locations', {
+      method: 'DELETE'
+    });
+  };
 
   setPosition = () => {
     const success = (position) => {
@@ -124,27 +155,27 @@ class Map extends Component {
 
   lineWidth = dist => {
     if(dist>3082328) {
-      return 400
+      return 4000
     }
     if(dist>2000000) {
-      return 300
+      return 3000
     }
     if(dist>600000) {
-      return 200
+      return 2000
     }
     if(dist>180770) {
-      return 100
+      return 1000
     }
     if(dist>81770) {
-      return 40
+      return 400
     }
     if(dist>30770) {
-      return 30
+      return 300
     }
     if(dist>10770) {
-      return 20
+      return 200
     }
-    return 8
+    return 80
   }
 
   handleErrors = (response) => {
@@ -153,87 +184,10 @@ class Map extends Component {
     }
     return response;
   }
-
-  startFunction = (result) => {
-    this.setState({
-      markerstart: {
-        latitude: result.result.center[1],
-        longitude: result.result.center[0]
-      }
-    })
-  }
-
-  resultFunction = (result) => {
-    const directions = [[this.state.markerstart.longitude, this.state.markerstart.latitude]]
-    const plainDirections = []
-    fetch('https://api.mapbox.com/directions/v5/mapbox/driving/' + this.state.markerstart.longitude + ',' + this.state.markerstart.latitude + ';' +
-      result.result.center[0] + ',' + result.result.center[1] + '?steps=true&geometries=geojson&access_token=' + process.env.REACT_APP_MAP_API)
-      .then(this.handleErrors)
-      .then(response => {
-        response.json().then(data => {
-          if(data.code === "NoRoute"){
-            console.log(data.code)
-            return
-          }
-          const dir = data.routes[0].geometry.coordinates
-          const pdir = data.routes[0].legs[0].steps
-          for(let i=0;i<dir.length;i++) {
-            directions.push(dir[i])
-          }
-          for(let i=0;i<pdir.length;i++) {
-            plainDirections.push(pdir[i].maneuver.instruction)
-          }
-          const viewport = new WebMercatorViewport(this.state.viewport)
-          const newViewport = viewport.fitBounds([[this.state.markerstart.longitude, this.state.markerstart.latitude], [result.result.center[0], result.result.center[1]]], {
-            padding: 30,
-            offset: [-100, -100]
-          })
-          this.setState({
-            viewport: {
-              width: vwidth,
-              height: vheight,
-              latitude: newViewport.latitude,
-              longitude: newViewport.longitude,
-              zoom: newViewport.zoom,
-              pitch: 0,
-              bearing: 0,
-              transitionDuration: 1700
-            },
-            markerdest: {
-              latitude: result.result.center[1],
-              longitude: result.result.center[0]
-            },
-            confirmshow: true,
-            linelayerstuff: {
-              id: 'GeoJsonLayer', 
-              data: {
-                "type": "LineString",
-                "coordinates": directions
-              },
-              getLineWidth: this.lineWidth(data.routes[0].distance),
-              getLineColor: [255,20,147]
-            },
-            directions: plainDirections
-          })
-      })
-      }).catch(error => {
-          console.log(error)
-    })
-  }
   
   confirmclick = () => {
     const interval = setInterval(this.setPosition, 3000)
     this.setState({
-      viewport: {
-        width: vwidth,
-        height: vheight,
-        latitude: this.state.markerstart.latitude,
-        longitude: this.state.markerstart.longitude,
-        zoom: 16,
-        pitch: 0,
-        bearing: 0,
-        transitionDuration: 1700
-      },
       confirmshow: false,
       haveDestination: true,
       linelayerstuff: {
@@ -242,11 +196,13 @@ class Map extends Component {
           "type": "LineString",
           "coordinates": this.state.linelayerstuff.data.coordinates
         },
-        getLineWidth: 8,
+        getLineWidth: this.state.linelayerstuff.getLineWidth,
         getLineColor: [255,20,147]
       },
       intervalNum: interval
     })
+    this.postLocations(this.state.markerstart.longitude, this.state.markerstart.latitude)
+    this.postLocations(this.state.markerdest.longitude, this.state.markerdest.latitude)
   }
 
   endrouteclick = () => {
@@ -280,7 +236,8 @@ class Map extends Component {
           getLineColor: [255,20,147]
         },
         haveUsersLocation: true,
-        haveDestination: false
+        haveDestination: false, 
+        selectVal: ""
       })
     }
     const error = (err) => {
@@ -307,13 +264,81 @@ class Map extends Component {
       }
     })
   }
+  handleChange = (event) => {
+    const lonp = this.state.userrequests[event.target.value].lonp
+    const latp = this.state.userrequests[event.target.value].latp
+    const lond = this.state.userrequests[event.target.value].lond
+    const latd = this.state.userrequests[event.target.value].latd
+
+    const directions = [[lonp, latp]]
+    const plainDirections = []
+    fetch('https://api.mapbox.com/directions/v5/mapbox/driving/' + lonp + ',' + latp + ';' + lond + ',' + latd + '?steps=true&geometries=geojson&access_token=' + process.env.REACT_APP_MAP_API)
+      .then(this.handleErrors)
+      .then(response => {
+        response.json().then(data => {
+          if(data.code === "NoRoute"){
+            console.log(data.code)
+            return
+          }
+          const dir = data.routes[0].geometry.coordinates
+          const pdir = data.routes[0].legs[0].steps
+          for(let i=0;i<dir.length;i++) {
+            directions.push(dir[i])
+          }
+          for(let i=0;i<pdir.length;i++) {
+            plainDirections.push(pdir[i].maneuver.instruction)
+          }
+          const viewport = new WebMercatorViewport(this.state.viewport)
+          const newViewport = viewport.fitBounds([[lonp, latp], [lond, latd]], {
+            padding: 30,
+            offset: [-100, -100]
+          })
+          this.setState({
+            viewport: {
+              width: vwidth,
+              height: vheight,
+              latitude: newViewport.latitude,
+              longitude: newViewport.longitude,
+              zoom: newViewport.zoom,
+              pitch: 0,
+              bearing: 0,
+              transitionDuration: 1700
+            },
+            markerdest: {
+              latitude: latd,
+              longitude: lond
+            },
+            confirmshow: true,
+            linelayerstuff: {
+              id: 'GeoJsonLayer', 
+              data: {
+                "type": "LineString",
+                "coordinates": directions
+              },
+              getLineWidth: this.lineWidth(data.routes[0].distance),
+              getLineColor: [255,20,147]
+            },
+            directions: plainDirections
+          })
+      })
+      }).catch(error => {
+          console.log(error)
+      })
+  };
 
   render() {
-    const auth = this.props.auth
-        
+    const auth = this.props.auth               
     return (
       <div className="mapContainer">
-
+        <Link to={"/home"}>
+            <p className="link">User side</p>
+        </Link>
+        <select className="userlist" onChange={this.handleChange}>
+            <option value="-1">User Requests</option>
+            {this.state.userrequests.map((x, i) => (
+              <option className="options" value={i} key={x.id}>ID: {x.id} PICKUP: {x.pickup} DROPOFF: {x.dropoff}</option>
+            ))}
+        </select>
         <div>
           <MapGL
               ref={this.mapRef} 
@@ -356,51 +381,15 @@ class Map extends Component {
                 <img className = "truckimg" alt='' src ='https://i.imgur.com/3dgA0sR.png' />
               </Marker>
             }
-            
-            {!this.state.haveDestination && 
-              <Geocoder
-              mapRef={this.mapRef}
-              containerRef={this.geocoderContainerRef}
-              onViewportChange={this.handleGeocoderViewportChange}
-              mapboxApiAccessToken={process.env.REACT_APP_MAP_API}
-              onResult={this.startFunction}
-              placeholder="Pickup location"
-            />}
-
-            {!this.state.haveDestination && 
-              <Geocoder
-              mapRef={this.mapRef}
-              containerRef={this.geocoderContainerRef}
-              onViewportChange={this.handleGeocoderViewportChange}
-              mapboxApiAccessToken={process.env.REACT_APP_MAP_API}
-              onResult={this.resultFunction}
-              placeholder="Drop off destination"
-            />}
           </MapGL>
 
           <div className="currentLocationContainer" onClick={this.goToCurrentLocation}>
             <i className="fas fa-location-arrow fa-2x fa-vc"></i>
           </div>
-
-          <div className="overmap">
-            {this.state.haveDestination && 
-              <p className="directionp">{this.state.directions[this.state.directionnum]}
-                {this.state.haveDestination && 
-                  <button id="EndRouteBtn" onClick={this.endrouteclick} className="endroutebtn">End Route</button>
-                }
-              </p>
-            }
-
-            {this.state.confirmshow && 
-              <button id="ConfirmBtn" onClick={this.confirmclick} className="confirmbtn">Go!</button>
-            }
-            
-          </div>
-
         </div>
       </div>
     )
   }
 }
 
-export default Map
+export default MapDriver

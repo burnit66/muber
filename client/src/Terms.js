@@ -1,10 +1,6 @@
 import React from 'react'
 import './CSS/terms.css'
 
-const handleSubmit = () => {
-    window.location.href = '/home'
-}
-
 const Terms = () => (
   <div className="termsContainer">
     <div className="title">
@@ -25,7 +21,7 @@ const Terms = () => (
     </div>
     <p className="termText">When one door of happiness closes, another opens, but often we look so long at the closed door that we do not see the one that has been opened for us.</p>
 
-    <button className="termButton" onClick={() => {handleSubmit()}}>Continue &amp; Agree</button>
+    <button className="termButton" onClick={() => {window.location.href = '/'}}>Continue &amp; Agree</button>
   </div>
 );
 

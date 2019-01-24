@@ -33,6 +33,10 @@ class Splash extends Component {
                 )
             }
 
+            <div className="termsSignupContainer">
+                <p>By pressing "Next", you agree to Mübers <a href="/terms">Terms of use</a> and <a href="/terms">Privacy Policy</a></p>
+            </div>
+
         </div>
     )
   }

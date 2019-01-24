@@ -83,7 +83,7 @@ export default class Auth {
   getProfile(cb) {
     this.lock.getUserInfo(localStorage.getItem('access_token'), (error, profile) => {
       if (profile) {
-        console.log("hello " + profile.name);
+        console.log("Hello " + profile.name);
       }
       localStorage.setItem("profile", JSON.stringify(profile))
       cb(error, profile)

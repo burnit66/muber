@@ -8,6 +8,7 @@ import Home from './Home'
 import MFA from './MFA'
 import Billing from './Billing'
 import Terms from './Terms'
+import MapDriver from './MapDriver'
 
 import Auth from './Auth/Auth'
 import history from './history'
@@ -37,6 +38,7 @@ const App = () => (
         <Route exact path="/mfa" component={MFA} />
         <Route exact path="/billing" component={Billing} />
         <Route exact path="/terms" component={Terms} />
+        <Route exact path="/driver" render = {(props) => <MapDriver auth={auth} {...props} />} />
 
         <Route path="/profile" render={(props) => (
             !auth.isAuthenticated() ? (

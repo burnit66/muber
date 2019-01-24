@@ -1,13 +1,33 @@
-const path = require("path");
-const router = require("express").Router();
-const apiRoutes = require("./api");
+const connection = require('../config/connection')
 
-// API Routes
-router.use("/api", apiRoutes);
+module.exports = function (app) {
+    app.get('/api/locations', (req, res) => {
+        connection.query('SELECT * FROM locations', function (err, data) {
+            err ? res.send(err) : res.json({
+                locations: data
+            })
+        })
+    })
 
-// If no API routes are hit, send the React app
-router.use(function(req, res) {
-  res.sendFile(path.join(__dirname, "../client/build/index.html"));
-});
+    app.post('/api/locations', (req, res) => {
+        connection.query("INSERT INTO locations (lonp, latp, lond, latd, pickup, dropoff) VALUES (?, ?, ?, ?, ?, ?)",
+            [req.body.lonp, req.body.latp, req.body.lond, req.body.latd, req.body.pickup, req.body.dropoff],
+            function (err, data) {
+                if (err) {
+                    console.log(err)
+                } else {
+                    console.log("Post Successful")
+                }
+            });
+    });
 
-module.exports = router;
+    app.delete('/api/locations', (req, res) => {
+        connection.query("TRUNCATE TABLE locations", function (err, data) {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log("Post Successful")
+            }
+        });
+    });
+}

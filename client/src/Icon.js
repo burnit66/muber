@@ -28,7 +28,7 @@ class Icon extends Component {
 
         return (
         <div>
-            <img className="locationIcon" alt="current location" src={profile.picture}/>
+            <img className="locationIcon" alt="" src={profile.picture}/>
         </div>
         )
     }
