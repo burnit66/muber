@@ -346,9 +346,11 @@ class MapUser extends Component {
         
     return (
       <div className="mapContainer">
-        <Link to={"/driver"}>
-            <p className="link">Driver side</p>
-        </Link>
+
+        {/* <Link to={"/driver"}>
+              <p className="link">Driver side</p>
+        </Link> */}
+
         <div>
           <MapGL
               ref={this.mapRef} 
@@ -421,6 +423,7 @@ class MapUser extends Component {
               <button id="ConfirmBtn" onClick={this.confirmclick} className="confirmbtn">Go!</button>
             }
           </div>
+
 
         </div>
       </div>

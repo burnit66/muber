@@ -13,6 +13,47 @@
 }
 
 .userlist {
+    width: 45%;
+    height: 40px;
+}
+
+.driverpick {
+    height: 30px;
+    background-color: rgb(255,20,147);
+    width: 10%;
+    height: 40px;
+}
+
+.driveimg {
+    width: 40px;
+    height:30px;
+}
+
+.overmap {
+    position: absolute;
+    top: 50px;
+    padding: 20px;
+    padding-left: 0px;
+}
+
+.directionp {
     width: 100%;
+    text-align: center;
+    background-color: black;
+    color: rgb(255,20,147);
+    border: 2px solid rgb(255,20,147);
+    font-size: 20px;
+    line-height: 2;
+}
+
+.confirmbtn {
+    position: absolute;
+    left: 200px;
+    top: 113px;
+    height: 80px;
+}
+
+.directionlist {
+    width: 45%;
     height: 40px;
 }
