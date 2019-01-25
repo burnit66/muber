@@ -357,9 +357,9 @@ class MapUser extends Component {
     return (
       <div className="mapContainer">
 
-        <Link to={"/driver"}>
+        {/* <Link to={"/driver"}>
               <p className="link">Driver side</p>
-        </Link>
+        </Link> */}
 
         <div>
           <MapGL
@@ -383,24 +383,18 @@ class MapUser extends Component {
               <Icon auth={auth}/>
             </Marker>
 
-            {/* STARTING ICON AFTER ACCEPT DISAPPEARS AFTER ACCEPT */}
-            {this.state.confirmshow && 
-              <Marker latitude={this.state.markerstart.latitude} longitude={this.state.markerstart.longitude} offsetLeft={-25} offsetTop={-20}>
-                <img className = "treasureimg" alt='' src ='http://placehold.it/20x20/000/000' />
-              </Marker>
-            }
 
             {/* DESTINATION BEFORE ACCEPT */}
             {this.state.confirmshow && 
               <Marker latitude={this.state.markerdest.latitude} longitude={this.state.markerdest.longitude} offsetLeft={-25} offsetTop={-10}>
-                <img className = "treasureimg" alt='' src ='http://placehold.it/20x20/b4da55/b4da55' />
+                <img className = "driveimg" alt='' src ='https://pngimg.com/uploads/treasure_chest/treasure_chest_PNG154.png' />
               </Marker>
             } 
 
             {/* DESTINATION AFTER ACCEPT */}
             {this.state.haveDestination && 
               <Marker latitude={this.state.markerdest.latitude} longitude={this.state.markerdest.longitude} offsetLeft={-25} offsetTop={-10}>
-                <img className = "truckimg" alt='' src ='https://i.imgur.com/3dgA0sR.png' />
+                <img className = "driveimg" alt='' src ='https://pngimg.com/uploads/treasure_chest/treasure_chest_PNG154.png' />
               </Marker>
             }
             
@@ -432,15 +426,15 @@ class MapUser extends Component {
           <div className="overmap">
             {this.state.haveDestination && 
               <p className="directionp">
-                Waiting for driver
+                Request Submitted! Waiting for driver.
               </p>
             }
 
             {this.state.confirmshow && 
               <button id="ConfirmBtn" onClick={this.confirmclick} className="confirmbtn">Go!</button>
             }
-            
           </div>
+
 
         </div>
         <BottomBar map={this.state} onRef={ref => (this.child = ref)}/>
