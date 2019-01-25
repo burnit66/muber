@@ -6,5 +6,3 @@
 .DS_Store
 .env
 
-# variables
-/client/src/Auth/auth0-variables.js
